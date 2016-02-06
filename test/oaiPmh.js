@@ -21,7 +21,7 @@ describe('OaiPmh', () => {
   });
 
   describe('listMetadataFormats()', () => {
-    it('should identify arxiv', mochaAsync(function* () {
+    it('should list arxiv metadata formats', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);
       const res = yield oaiPmh.listMetadataFormats();
       res.should.containDeep([
@@ -35,16 +35,22 @@ describe('OaiPmh', () => {
           schema: 'http://arxiv.org/OAI/arXiv.xsd',
           metadataNamespace: 'http://arxiv.org/OAI/arXiv/',
         },
-        {
-          metadataPrefix: 'arXivOld',
-          schema: 'http://arxiv.org/OAI/arXivOld.xsd',
-          metadataNamespace: 'http://arxiv.org/OAI/arXivOld/',
-        },
-        {
-          metadataPrefix: 'arXivRaw',
-          schema: 'http://arxiv.org/OAI/arXivRaw.xsd',
-          metadataNamespace: 'http://arxiv.org/OAI/arXivRaw/',
-        },
+      ]);
+    }));
+  });
+
+  describe('listSets()', () => {
+    it('should list arxiv sets', mochaAsync(function* () {
+      const oaiPmh = new OaiPmh(baseUrl);
+      const res = yield oaiPmh.listSets();
+      res.should.containDeep([
+        { setSpec: 'cs', setName: 'Computer Science' },
+        { setSpec: 'math', setName: 'Mathematics' },
+        { setSpec: 'physics', setName: 'Physics' },
+        { setSpec: 'physics:astro-ph', setName: 'Astrophysics' },
+        { setSpec: 'q-bio', setName: 'Quantitative Biology' },
+        { setSpec: 'q-fin', setName: 'Quantitative Finance' },
+        { setSpec: 'stat', setName: 'Statistics' },
       ]);
     }));
   });

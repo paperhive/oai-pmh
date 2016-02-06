@@ -39,4 +39,23 @@ export class OaiPmh {
       return get(obj, 'OAI-PMH.Identify');
     });
   }
+
+  listMetadataFormats() {
+    const ctx = this;
+    return co(function* _identify() {
+      // send request
+      const res = yield requestAsync({
+        url: ctx.baseUrl,
+        qs: {
+          verb: 'ListMetadataFormats',
+        },
+      });
+
+      // parse xml into js object
+      const obj = yield parseXml(res.body, xmlOptions);
+
+      // parse object
+      return get(obj, 'OAI-PMH.ListMetadataFormats.metadataFormat');
+    });
+  }
 }

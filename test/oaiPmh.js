@@ -1,4 +1,4 @@
-import { OaiPmh } from '../';
+import { OaiPmh, OaiPmhError } from '../';
 import { mochaAsync } from './utils';
 
 const baseUrl = 'http://export.arxiv.org/oai2';
@@ -21,21 +21,38 @@ describe('OaiPmh', () => {
   });
 
   describe('listMetadataFormats()', () => {
-    it('should list arxiv metadata formats', mochaAsync(function* () {
+    const metadataFormats = [
+      {
+        metadataPrefix: 'oai_dc',
+        schema: 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd',
+        metadataNamespace: 'http://www.openarchives.org/OAI/2.0/oai_dc/',
+      },
+      {
+        metadataPrefix: 'arXiv',
+        schema: 'http://arxiv.org/OAI/arXiv.xsd',
+        metadataNamespace: 'http://arxiv.org/OAI/arXiv/',
+      },
+    ];
+
+    it('should list metadata formats for arxiv', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);
       const res = yield oaiPmh.listMetadataFormats();
-      res.should.containDeep([
-        {
-          metadataPrefix: 'oai_dc',
-          schema: 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd',
-          metadataNamespace: 'http://www.openarchives.org/OAI/2.0/oai_dc/',
-        },
-        {
-          metadataPrefix: 'arXiv',
-          schema: 'http://arxiv.org/OAI/arXiv.xsd',
-          metadataNamespace: 'http://arxiv.org/OAI/arXiv/',
-        },
-      ]);
+      res.should.containDeep(metadataFormats);
+    }));
+
+    it('should list metadata formats for arxiv id 1208.0264', mochaAsync(function* () {
+      const oaiPmh = new OaiPmh(baseUrl);
+      const res = yield oaiPmh.listMetadataFormats({
+        identifier: 'oai:arXiv.org:1208.0264',
+      });
+      res.should.containDeep(metadataFormats);
+    }));
+
+    it('should fail for non-existent arxiv id lolcat', mochaAsync(function* () {
+      const oaiPmh = new OaiPmh(baseUrl);
+      oaiPmh.listMetadataFormats({
+        identifier: 'oai:arXiv.org:lolcat',
+      }).should.be.rejectedWith(OaiPmhError);
     }));
   });
 

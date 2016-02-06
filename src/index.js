@@ -5,11 +5,40 @@ import request from 'request';
 import { parseString } from 'xml2js';
 
 const requestAsync = promisify(request);
-const parseXml = promisify(parseString);
 
-const xmlOptions = {
-  explicitArray: false,
-};
+export class OaiPmhError extends Error {
+  constructor(message, code) {
+    super(message);
+    this.name = this.constructor.name;
+    this.message = message;
+    this.code = code;
+    Error.captureStackTrace(this, this.constructor.name);
+  }
+}
+
+// test if the parsed xml contains an error
+const parseOaiPmhXml = co.wrap(function* _parseOaiPmhXml(xml) {
+  // parse xml into js object
+  const obj = yield promisify(parseString)(xml, {
+    explicitArray: false,
+  });
+
+  const oaiPmh = obj && obj['OAI-PMH'];
+
+  if (!oaiPmh) {
+    throw new OaiPmhError('Returned data does not conform to OAI-PMH');
+  }
+
+  const error = oaiPmh.error;
+  if (error) {
+    throw new OaiPmhError(
+      `OAI-PMH provider returned an error: ${error._}`,
+      get(error, '$.code')
+    );
+  }
+
+  return oaiPmh;
+});
 
 export class OaiPmh {
   constructor(baseUrl) {
@@ -32,15 +61,15 @@ export class OaiPmh {
         },
       });
 
-      // parse xml into js object
-      const obj = yield parseXml(res.body, xmlOptions);
+      // parse xml
+      const obj = yield parseOaiPmhXml(res.body);
 
       // parse object
-      return get(obj, 'OAI-PMH.Identify');
+      return obj.Identify;
     });
   }
 
-  listMetadataFormats() {
+  listMetadataFormats(options = {}) {
     const ctx = this;
     return co(function* _identify() {
       // send request
@@ -48,14 +77,15 @@ export class OaiPmh {
         url: ctx.baseUrl,
         qs: {
           verb: 'ListMetadataFormats',
+          identifier: options.identifier,
         },
       });
 
-      // parse xml into js object
-      const obj = yield parseXml(res.body, xmlOptions);
+      // parse xml
+      const obj = yield parseOaiPmhXml(res.body);
 
       // parse object
-      return get(obj, 'OAI-PMH.ListMetadataFormats.metadataFormat');
+      return get(obj, 'ListMetadataFormats.metadataFormat');
     });
   }
 
@@ -70,11 +100,11 @@ export class OaiPmh {
         },
       });
 
-      // parse xml into js object
-      const obj = yield parseXml(res.body, xmlOptions);
+      // parse xml
+      const obj = yield parseOaiPmhXml(res.body);
 
       // parse object
-      return get(obj, 'OAI-PMH.ListSets.set');
+      return get(obj, 'ListSets.set');
     });
   }
 }

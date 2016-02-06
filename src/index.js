@@ -1,4 +1,4 @@
-class OaiPmh {
+export class OaiPmh {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
   }

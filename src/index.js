@@ -197,6 +197,10 @@ export class OaiPmh {
     });
   }
 
+  listRecords(options) {
+    return new OaiPmhListIterable(this, 'ListRecords', 'record', options);
+  }
+
   listSets() {
     return new OaiPmhListIterable(this, 'ListSets', 'set');
   }

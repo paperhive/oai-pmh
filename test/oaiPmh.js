@@ -82,6 +82,39 @@ describe('OaiPmh', () => {
     }));
   });
 
+  describe('listRecords()', function () {
+    // the first request to arxiv always fails with 503 and a
+    // "retry after 20 seconds" message (which is OAI-PMH-compliant)
+    this.timeout(30000);
+
+    it('should list identifiers from arxiv', mochaAsync(function* () {
+      const oaiPmh = new OaiPmh(baseUrl);
+      const options = {
+        metadataPrefix: 'arXiv',
+        from: '2015-01-01',
+        until: '2015-01-03',
+      };
+      const res = [];
+      for (const recordPromise of oaiPmh.listRecords(options)) {
+        res.push(yield recordPromise);
+      }
+      res.should.containDeep([{
+        header: {
+          identifier: 'oai:arXiv.org:1412.8544',
+          datestamp: '2015-01-03',
+          setSpec: 'cs',
+        },
+        metadata: {
+          arXiv: {
+            created: '2014-12-29',
+            id: '1412.8544',
+          },
+        },
+      }]);
+      res.should.have.length(2);
+    }));
+  });
+
   describe('listSets()', () => {
     it('should list arxiv sets', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);

@@ -1,4 +1,4 @@
-import { OaiPmh, OaiPmhError } from '../';
+import { OaiPmh, OaiPmhError } from '../src/index';
 import { mochaAsync } from './utils';
 
 const baseUrl = 'http://export.arxiv.org/oai2';

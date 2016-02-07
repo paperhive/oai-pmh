@@ -2,13 +2,16 @@
   "name": "oai-pmh",
   "version": "1.0.0-alpha.1",
   "description": "OAI-PMH harvester module for nodejs",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "cover": "babel-node ./node_modules/.bin/isparta cover ./node_modules/mocha/bin/_mocha test/",
     "codecov": "npm run cover && codecov",
     "lint": "eslint src test",
-    "_prepublish": "babel -d dist src/",
+    "prepublish": "babel -d dist src/",
     "test": "babel-node ./node_modules/mocha/bin/_mocha"
+  },
+  "bin": {
+    "oai-pmh": "./bin/oai-pmh"
   },
   "repository": {
     "type": "git",
@@ -39,6 +42,7 @@
   "dependencies": {
     "bluebird": "^3.2.2",
     "co": "^4.6.0",
+    "commander": "^2.9.0",
     "lodash": "^4.2.1",
     "request": "^2.69.0",
     "xml2js": "^0.4.16"

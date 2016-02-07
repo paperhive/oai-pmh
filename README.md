@@ -6,3 +6,9 @@ A nodejs module for the Open Archives Initiative Protocol for Metadata Harvestin
 ```
 npm install oai-pmh
 ```
+
+# CLI
+Get identifiers of all arxiv articles:
+```
+oai-pmh list-identifiers http://export.arxiv.org/oai2 -p arXiv
+```

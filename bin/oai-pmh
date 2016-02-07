@@ -1,0 +1,34 @@
+#! /usr/bin/env node
+
+const _ = require('lodash');
+const co = require('co');
+const program = require('commander');
+
+const oaiPmhModule = require('../');
+const pkg = require('../package.json');
+
+program
+  .version(pkg.version);
+
+program
+  .command('list-identifiers [baseUrl]')
+  .option('-p, --metadata-prefix [prefix]')
+  .action((baseUrl, _options) => {
+    try {
+      co(function* _listIdentifiers() {
+        const options = _.pick(_options, 'metadataPrefix');
+        const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+        console.log('[');
+        for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
+          const identifier = yield identifierPromise;
+          console.log(JSON.stringify(identifier, undefined, 2));
+        }
+        console.log(']');
+      });
+    } catch (e) {
+      console.err(e);
+      process.exit(1);
+    }
+  });
+
+program.parse(process.argv);

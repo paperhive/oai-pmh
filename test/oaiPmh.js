@@ -23,14 +23,14 @@ describe('OaiPmh', () => {
   describe('listIdentifiers()', function () {
     // the first request to arxiv always fails with 503 and a
     // "retry after 20 seconds" message (which is OAI-PMH-compliant)
-    this.timeout(30000);
+    this.timeout(90000);
 
     it('should list identifiers from arxiv', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);
       const options = {
         metadataPrefix: 'arXiv',
         from: '2015-01-01',
-        until: '2015-01-03',
+        until: '2015-03-01',
       };
       const res = [];
       for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
@@ -42,6 +42,7 @@ describe('OaiPmh', () => {
         datestamp: '2015-01-03',
         setSpec: 'cs',
       }]);
+      res.should.have.length(14982);
     }));
   });
 

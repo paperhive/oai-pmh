@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+'use strict';
 
 const _ = require('lodash');
 const co = require('co');
@@ -19,8 +20,13 @@ program
         const options = _.pick(_options, 'metadataPrefix');
         const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
         console.log('[');
+        let first = true;
         for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
           const identifier = yield identifierPromise;
+          if (!first) {
+            console.log(',');
+          }
+          first = false;
           console.log(JSON.stringify(identifier, undefined, 2));
         }
         console.log(']');

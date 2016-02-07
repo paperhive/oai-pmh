@@ -1,20 +1,80 @@
 import { promisify } from 'bluebird';
 import co from 'co';
-import { assign, get } from 'lodash';
+import { assign, clone, get } from 'lodash';
 import request from 'request';
 
 import { AsyncIterable, OaiPmhError, parseOaiPmhXml, sleep } from './utils';
 
 // iterable for OAI PMH list results
 class OaiPmhListIterable extends AsyncIterable {
-  constructor() {
+  constructor(harvester, verb, field, options) {
     super();
-    // TODO
+    this.harvester = harvester;
+    this.verb = verb;
+    this.field = field;
+    this.options = options;
   }
 
-  // the actual job
   getNext() {
-    // TODO
+    const self = this;
+    return co(function* _getNext() {
+      if (!self.currentResult ||
+          self.currentIndex >= self.currentResult[self.field].length) {
+        let res;
+        // no results yet?
+        if (!self.currentResult) {
+          // send first request
+          const query = clone(self.options);
+          query.verb = self.verb;
+          res = yield self.harvester.request({
+            url: self.harvester.baseUrl,
+            qs: query,
+          });
+        } else {
+          // fetch next list
+          res = yield self.harvester.request({
+            url: self.harvester.baseUrl,
+            qs: {
+              verb: self.verb,
+              resumptionToken: self.currentResult.resumptionToken._,
+            },
+          });
+        }
+
+        // parse xml
+        const obj = yield parseOaiPmhXml(res.body);
+
+        // store current result and initialize index
+        self.currentResult = obj[self.verb];
+        self.currentIndex = 0;
+      }
+
+      const list = self.currentResult[self.field];
+      const token = self.currentResult.resumptionToken;
+      const ret = list[self.currentIndex++];
+
+      // is this the last element?
+      if (self.currentIndex >= list.length) {
+        // do we have a resumption token?
+        if (token) {
+          let cursor = get(token, '$.cursor');
+          let completeListSize = get(token, '$.completeListSize');
+          if (cursor !== undefined && completeListSize !== undefined) {
+            cursor = parseInt(cursor, 10);
+            completeListSize = parseInt(completeListSize, 10);
+            if (cursor + list.length >= completeListSize) {
+              // we got 'em all
+              self.done();
+            }
+          }
+        } else {
+          // no resumption token
+          self.done();
+        }
+      }
+
+      return ret;
+    });
   }
 }
 
@@ -113,9 +173,8 @@ export class OaiPmh {
     });
   }
 
-  /* TODO */
-  listIdentifiers() {
-    return new OaiPmhListIterable();
+  listIdentifiers(options = {}) {
+    return new OaiPmhListIterable(this, 'ListIdentifiers', 'header', options);
   }
 
   listMetadataFormats(options = {}) {

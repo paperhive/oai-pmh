@@ -1,3 +1,15 @@
 {
-  "presets": ["es2015"]
+  "plugins": [
+    "babel-plugin-transform-es2015-classes",
+    "babel-plugin-transform-es2015-computed-properties",
+    "babel-plugin-transform-es2015-destructuring",
+    "babel-plugin-transform-es2015-function-name",
+    "babel-plugin-transform-es2015-modules-commonjs",
+    "babel-plugin-transform-es2015-object-super",
+    "babel-plugin-transform-es2015-parameters",
+    "babel-plugin-transform-es2015-shorthand-properties",
+    "babel-plugin-transform-es2015-sticky-regex",
+    "babel-plugin-transform-es2015-typeof-symbol",
+    "babel-plugin-transform-es2015-unicode-regex"
+  ]
 }

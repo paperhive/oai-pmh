@@ -20,6 +20,18 @@ describe('OaiPmh', () => {
     }));
   });
 
+  /*
+  describe('listIdentifiers()', () => {
+    it('should list identifiers from arxiv', mochaAsync(function* () {
+      const oaiPmh = new OaiPmh(baseUrl);
+      for (const identifierPromise of oaiPmh.listIdentifiers()) {
+        const identifier = yield identifierPromise;
+        console.log(identifier);
+      }
+    }));
+  });
+  */
+
   describe('listMetadataFormats()', () => {
     const metadataFormats = [
       {

@@ -2,47 +2,21 @@ import { promisify } from 'bluebird';
 import co from 'co';
 import { assign, get } from 'lodash';
 import request from 'request';
-import { parseString } from 'xml2js';
 
-// error class for OAI-PMH errors
-export class OaiPmhError extends Error {
-  constructor(message, code) {
-    super(message);
-    this.name = this.constructor.name;
-    this.message = message;
-    this.code = code;
-    Error.captureStackTrace(this, this.constructor.name);
+import { AsyncIterable, OaiPmhError, parseOaiPmhXml, sleep } from './utils';
+
+// iterable for OAI PMH list results
+class OaiPmhListIterable extends AsyncIterable {
+  constructor() {
+    super();
+    // TODO
+  }
+
+  // the actual job
+  getNext() {
+    // TODO
   }
 }
-
-// test if the parsed xml contains an error
-const parseOaiPmhXml = co.wrap(function* _parseOaiPmhXml(xml) {
-  // parse xml into js object
-  const obj = yield promisify(parseString)(xml, {
-    explicitArray: false,
-  });
-
-  const oaiPmh = obj && obj['OAI-PMH'];
-
-  if (!oaiPmh) {
-    throw new OaiPmhError('Returned data does not conform to OAI-PMH');
-  }
-
-  const error = oaiPmh.error;
-  if (error) {
-    throw new OaiPmhError(
-      `OAI-PMH provider returned an error: ${error._}`,
-      get(error, '$.code')
-    );
-  }
-
-  return oaiPmh;
-});
-
-// sleep via promise
-const sleep = co.wrap(function* _sleep(seconds) {
-  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
-});
 
 // main class
 export class OaiPmh {
@@ -139,26 +113,10 @@ export class OaiPmh {
     });
   }
 
-  /* TODO!
+  /* TODO */
   listIdentifiers(options = {}) {
-    const ctx = this;
-    return co(function* _listIdentifiers() {
-      // send request
-      const res = yield ctx.request({
-        url: ctx.baseUrl,
-        qs: {
-          verb: 'ListIdentifiers',
-        },
-      });
-
-      // parse xml
-      const obj = yield parseOaiPmhXml(res.body);
-
-      // parse object
-      return get(obj, 'ListSets.set');
-    });
+    return new OaiPmhListIterable();
   }
-  */
 
   listMetadataFormats(options = {}) {
     const ctx = this;

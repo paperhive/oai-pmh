@@ -114,7 +114,7 @@ export class OaiPmh {
   }
 
   /* TODO */
-  listIdentifiers(options = {}) {
+  listIdentifiers() {
     return new OaiPmhListIterable();
   }
 

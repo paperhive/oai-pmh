@@ -149,6 +149,27 @@ export class OaiPmh {
     });
   }
 
+  getRecord(identifier, metadataPrefix) {
+    const ctx = this;
+    return co(function* _identify() {
+      // send request
+      const res = yield ctx.request({
+        url: ctx.baseUrl,
+        qs: {
+          verb: 'GetRecord',
+          identifier,
+          metadataPrefix,
+        },
+      });
+
+      // parse xml
+      const obj = yield parseOaiPmhXml(res.body);
+
+      // parse object
+      return get(obj, 'GetRecord.record');
+    });
+  }
+
   /**
    * Identifies a provider
    *

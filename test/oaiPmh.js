@@ -3,7 +3,29 @@ import { mochaAsync } from './utils';
 
 const baseUrl = 'http://export.arxiv.org/oai2';
 
+const record = {
+  header: {
+    identifier: 'oai:arXiv.org:1412.8544',
+    datestamp: '2015-01-03',
+    setSpec: 'cs',
+  },
+  metadata: {
+    arXiv: {
+      created: '2014-12-29',
+      id: '1412.8544',
+    },
+  },
+};
+
 describe('OaiPmh', () => {
+  describe('getRecord()', () => {
+    it('should get a record', mochaAsync(function* () {
+      const oaiPmh = new OaiPmh(baseUrl);
+      const res = yield oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv');
+      res.should.containDeep(record);
+    }));
+  });
+
   describe('identify()', () => {
     it('should identify arxiv', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);
@@ -98,19 +120,7 @@ describe('OaiPmh', () => {
       for (const recordPromise of oaiPmh.listRecords(options)) {
         res.push(yield recordPromise);
       }
-      res.should.containDeep([{
-        header: {
-          identifier: 'oai:arXiv.org:1412.8544',
-          datestamp: '2015-01-03',
-          setSpec: 'cs',
-        },
-        metadata: {
-          arXiv: {
-            created: '2014-12-29',
-            id: '1412.8544',
-          },
-        },
-      }]);
+      res.should.containDeep([record]);
       res.should.have.length(2);
     }));
   });

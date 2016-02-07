@@ -7,7 +7,7 @@ import { AsyncIterable, OaiPmhError, parseOaiPmhXml, sleep } from './utils';
 
 // iterable for OAI PMH list results
 class OaiPmhListIterable extends AsyncIterable {
-  constructor(harvester, verb, field, options) {
+  constructor(harvester, verb, field, options = {}) {
     super();
     this.harvester = harvester;
     this.verb = verb;
@@ -198,21 +198,6 @@ export class OaiPmh {
   }
 
   listSets() {
-    const ctx = this;
-    return co(function* _listSets() {
-      // send request
-      const res = yield ctx.request({
-        url: ctx.baseUrl,
-        qs: {
-          verb: 'ListSets',
-        },
-      });
-
-      // parse xml
-      const obj = yield parseOaiPmhXml(res.body);
-
-      // parse object
-      return get(obj, 'ListSets.set');
-    });
+    return new OaiPmhListIterable(this, 'ListSets', 'set');
   }
 }

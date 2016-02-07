@@ -84,7 +84,11 @@ describe('OaiPmh', () => {
   describe('listSets()', () => {
     it('should list arxiv sets', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);
-      const res = yield oaiPmh.listSets();
+      const res = [];
+      for (const setPromise of oaiPmh.listSets()) {
+        const set = yield setPromise;
+        res.push(set);
+      }
       res.should.containDeep([
         { setSpec: 'cs', setName: 'Computer Science' },
         { setSpec: 'math', setName: 'Mathematics' },

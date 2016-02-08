@@ -17,12 +17,6 @@ export function mochaAsync(fn) {
 // based on https://github.com/porchdotcom/nock-back-mocha/
 const nockFixtureDir = path.resolve(__dirname, './nockFixtures');
 
-// Don't record or replay anything, basically don't use nock at all.
-// This is until <https://github.com/visionmedia/supertest/pull/302> is
-// resolved.
-// TODO go back to default
-// nockBack.setMode('wild');
-
 export const nockFixtures = function (dir = nockFixtureDir, timeout = 15000) {
   const filenames = [];
   return {

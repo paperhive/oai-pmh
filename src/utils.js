@@ -19,6 +19,8 @@ export const parseOaiPmhXml = co.wrap(function* _parseOaiPmhXml(xml) {
   // parse xml into js object
   const obj = yield promisify(parseString)(xml, {
     explicitArray: false,
+    trim: true,
+    normalize: true,
   });
 
   const oaiPmh = obj && obj['OAI-PMH'];

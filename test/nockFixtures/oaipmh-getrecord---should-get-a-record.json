@@ -1,0 +1,18 @@
+[
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?verb=GetRecord&identifier=oai%3AarXiv.org%3A1412.8544&metadataPrefix=arXiv",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2016-02-08T10:29:57Z</responseDate>\n<request verb=\"GetRecord\" identifier=\"oai:arXiv.org:1412.8544\" metadataPrefix=\"arXiv\">http://export.arxiv.org/oai2</request>\n<GetRecord>\n<record>\n<header>\n <identifier>oai:arXiv.org:1412.8544</identifier>\n <datestamp>2015-01-03</datestamp>\n <setSpec>cs</setSpec>\n</header>\n<metadata>\n <arXiv xmlns=\"http://arxiv.org/OAI/arXiv/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://arxiv.org/OAI/arXiv/ http://arxiv.org/OAI/arXiv.xsd\">\n <id>1412.8544</id><created>2014-12-29</created><authors><author><keyname>Uijlen</keyname><forenames>Sander</forenames><affiliation>Radboud Universiteit</affiliation></author><author><keyname>Westerbaan</keyname><forenames>Bas</forenames><affiliation>Radboud Universiteit</affiliation></author></authors><title>A Kochen-Specker system has at least 22 vectors (extended abstract)</title><categories>cs.DM</categories><comments>In Proceedings QPL 2014, arXiv:1412.8102</comments><proxy>EPTCS</proxy><journal-ref>EPTCS 172, 2014, pp. 154-164</journal-ref><doi>10.4204/EPTCS.172.11</doi><license>http://arxiv.org/licenses/nonexclusive-distrib/1.0/</license><abstract>  At the heart of the Conway-Kochen Free Will theorem and Kochen and Specker's\nargument against non-contextual hidden variable theories is the existence of a\nKochen-Specker (KS) system: a set of points on the sphere that has no\n0,1-coloring such that at most one of two orthogonal points are colored 1 and\nof three pairwise orthogonal points exactly one is colored 1. In public\nlectures, Conway encouraged the search for small KS systems. At the time of\nwriting, the smallest known KS system has 31 vectors. Arends, Ouaknine and\nWampler have shown that a KS system has at least 18 vectors, by reducing the\nproblem to the existence of graphs with a topological embeddability and\nnon-colorability property. The bottleneck in their search proved to be the\nsheer number of graphs on more than 17 vertices and deciding embeddability.\n  Continuing their effort, we prove a restriction on the class of graphs we\nneed to consider and develop a more practical decision procedure for\nembeddability to improve the lower bound to 22.\n</abstract></arXiv>\n</metadata>\n</record>\n</GetRecord>\n</OAI-PMH>\n",
+        "headers": {
+            "date": "Mon, 08 Feb 2016 10:29:47 GMT",
+            "server": "Apache",
+            "vary": "Accept-Encoding,User-Agent",
+            "connection": "close",
+            "transfer-encoding": "chunked",
+            "content-type": "text/xml"
+        }
+    }
+]

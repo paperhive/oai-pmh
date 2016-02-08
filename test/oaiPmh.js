@@ -1,5 +1,5 @@
 import { OaiPmh, OaiPmhError } from '../src/index';
-import { mochaAsync } from './utils';
+import { mochaAsync, nockFixtures } from './utils';
 
 const baseUrl = 'http://export.arxiv.org/oai2';
 
@@ -18,6 +18,11 @@ const record = {
 };
 
 describe('OaiPmh', () => {
+  // set up nock, nock, nock'in on heaven's door
+  const nockFixture = nockFixtures();
+  beforeEach(nockFixture.beforeEach);
+  afterEach(nockFixture.afterEach);
+
   describe('getRecord()', () => {
     it('should get a record', mochaAsync(function* () {
       const oaiPmh = new OaiPmh(baseUrl);
@@ -64,7 +69,7 @@ describe('OaiPmh', () => {
         datestamp: '2015-01-03',
         setSpec: 'cs',
       }]);
-      res.should.have.length(14982);
+      res.should.have.length(5);
     }));
   });
 

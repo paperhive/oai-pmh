@@ -1,0 +1,51 @@
+[
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?metadataPrefix=arXiv&from=2015-01-01&until=2015-03-01&verb=ListIdentifiers",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2016-02-08T10:40:15Z</responseDate>\n<request verb=\"ListIdentifiers\" until=\"2015-03-01\" from=\"2015-01-01\" metadataPrefix=\"arXiv\">http://export.arxiv.org/oai2</request>\n<ListIdentifiers>\n<header>\n <identifier>oai:arXiv.org:1412.8532</identifier>\n <datestamp>2015-01-05</datestamp>\n <setSpec>cs</setSpec>\n</header>\n<header>\n <identifier>oai:arXiv.org:1412.8544</identifier>\n <datestamp>2015-01-03</datestamp>\n <setSpec>cs</setSpec>\n</header>\n<header>\n <identifier>oai:arXiv.org:1412.8576</identifier>\n <datestamp>2015-02-17</datestamp>\n <setSpec>cs</setSpec>\n <setSpec>physics:physics</setSpec>\n</header>\n<resumptionToken cursor=\"0\" completeListSize=\"5\">1083072|10001</resumptionToken>\n</ListIdentifiers>\n</OAI-PMH>\n",
+        "headers": {
+            "date": "Mon, 08 Feb 2016 10:33:11 GMT",
+            "server": "Apache",
+            "vary": "Accept-Encoding,User-Agent",
+            "connection": "close",
+            "transfer-encoding": "chunked",
+            "content-type": "text/xml"
+        }
+    },
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?verb=ListIdentifiers&resumptionToken=1083072%7C10001",
+        "body": "",
+        "status": 503,
+        "response": "<html><body>\n<h1>Retry after 20 seconds</h1>\n</body></html>\n",
+        "headers": {
+            "date": "Mon, 08 Feb 2016 10:33:36 GMT",
+            "server": "Apache",
+            "retry-after": "20",
+            "vary": "Accept-Encoding,User-Agent",
+            "connection": "close",
+            "transfer-encoding": "chunked",
+            "content-type": "text/html"
+        }
+    },
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?verb=ListIdentifiers&resumptionToken=1083072%7C10001",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2016-02-08T10:41:25Z</responseDate>\n<request verb=\"ListIdentifiers\" resumptionToken=\"1083072|10001\">http://export.arxiv.org/oai2</request>\n<ListIdentifiers>\n<header>\n <identifier>oai:arXiv.org:1501.05750</identifier>\n <datestamp>2015-01-26</datestamp>\n <setSpec>physics:physics</setSpec>\n</header>\n<header>\n <identifier>oai:arXiv.org:1501.05751</identifier>\n <datestamp>2015-01-26</datestamp>\n <setSpec>q-fin</setSpec>\n</header>\n<resumptionToken cursor=\"3\" completeListSize=\"5\"></resumptionToken>\n</ListIdentifiers>\n</OAI-PMH>\n",
+        "headers": {
+            "date": "Mon, 08 Feb 2016 10:33:57 GMT",
+            "server": "Apache",
+            "vary": "Accept-Encoding,User-Agent",
+            "connection": "close",
+            "transfer-encoding": "chunked",
+            "content-type": "text/xml"
+        }
+    }
+]

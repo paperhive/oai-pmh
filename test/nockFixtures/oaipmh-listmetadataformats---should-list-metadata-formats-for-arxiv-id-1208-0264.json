@@ -1,0 +1,18 @@
+[
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?verb=ListMetadataFormats&identifier=oai%3AarXiv.org%3A1208.0264",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2016-02-08T10:34:08Z</responseDate>\n<request verb=\"ListMetadataFormats\" identifier=\"oai:arXiv.org:1208.0264\">http://export.arxiv.org/oai2</request>\n<ListMetadataFormats>\n<metadataFormat>\n <metadataPrefix>oai_dc</metadataPrefix>\n <schema>http://www.openarchives.org/OAI/2.0/oai_dc.xsd</schema>\n <metadataNamespace>http://www.openarchives.org/OAI/2.0/oai_dc/</metadataNamespace>\n</metadataFormat>\n<metadataFormat>\n <metadataPrefix>arXiv</metadataPrefix>\n <schema>http://arxiv.org/OAI/arXiv.xsd</schema>\n <metadataNamespace>http://arxiv.org/OAI/arXiv/</metadataNamespace>\n</metadataFormat>\n<metadataFormat>\n <metadataPrefix>arXivOld</metadataPrefix>\n <schema>http://arxiv.org/OAI/arXivOld.xsd</schema>\n <metadataNamespace>http://arxiv.org/OAI/arXivOld/</metadataNamespace>\n</metadataFormat>\n<metadataFormat>\n <metadataPrefix>arXivRaw</metadataPrefix>\n <schema>http://arxiv.org/OAI/arXivRaw.xsd</schema>\n <metadataNamespace>http://arxiv.org/OAI/arXivRaw/</metadataNamespace>\n</metadataFormat>\n</ListMetadataFormats>\n</OAI-PMH>\n",
+        "headers": {
+            "date": "Mon, 08 Feb 2016 10:34:06 GMT",
+            "server": "Apache",
+            "vary": "Accept-Encoding,User-Agent",
+            "connection": "close",
+            "transfer-encoding": "chunked",
+            "content-type": "text/xml"
+        }
+    }
+]

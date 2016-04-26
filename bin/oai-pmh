@@ -14,9 +14,9 @@ program
 program
   .command('list-identifiers <baseUrl>')
   .option('-p, --metadata-prefix <prefix>')
-  .option('-f, --from [ISO8601 date]')
-  .option('-u, --until [ISO8601 date]')
-  .option('-s, --set [setSpec]')
+  .option('-f, --from <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-u, --until <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-s, --set <SETSPEC>', 'set specifier, e.g., "math"')
   .action((baseUrl, _options) => {
     try {
       co(function* _listIdentifiers() {

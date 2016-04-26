@@ -12,27 +12,24 @@ program
   .version(pkg.version);
 
 program
-  .command('list-identifiers [baseUrl]')
-  .option('-p, --metadata-prefix [prefix]')
+  .command('list-identifiers <baseUrl>')
+  .option('-p, --metadata-prefix <prefix>')
+  .option('-f, --from [ISO8601 date]')
+  .option('-u, --until [ISO8601 date]')
+  .option('-s, --set [setSpec]')
   .action((baseUrl, _options) => {
     try {
       co(function* _listIdentifiers() {
-        const options = _.pick(_options, 'metadataPrefix');
+        const options = _.pick(_options, 'metadataPrefix', 'from', 'until', 'set');
         const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
-        console.log('[');
-        let first = true;
+
         for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
           const identifier = yield identifierPromise;
-          if (!first) {
-            console.log(',');
-          }
-          first = false;
-          console.log(JSON.stringify(identifier, undefined, 2));
+          process.stdout.write(`${JSON.stringify(identifier)}\n`);
         }
-        console.log(']');
       });
-    } catch (e) {
-      console.err(e);
+    } catch (err) {
+      process.stderr.write(`${err.message}\n`);
       process.exit(1);
     }
   });

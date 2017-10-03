@@ -82,7 +82,7 @@ program
   .action((baseUrl, _options) => run(function* listIdentifiers() {
     const options = _.pick(_options, 'metadataPrefix', 'from', 'until', 'set');
     const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
-    yield printList(oaiPmh.listIdentifiers(options));
+    yield printList(oaiPmh.listRecords(options));
   }));
 
 program

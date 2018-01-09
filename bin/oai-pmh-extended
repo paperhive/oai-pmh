@@ -1,0 +1,123 @@
+#! /usr/bin/env node
+'use strict';
+
+const _ = require('lodash');
+const co = require('co');
+const program = require('commander');
+
+const oaiPmhModule = require('../');
+const pkg = require('../package.json');
+var records = [] ; 
+
+program
+  .version(pkg.version);
+
+function run(fun) {
+  co(fun).then(
+    () => process.exit(0),
+    (err) => {
+      process.stderr.write(`${err.toS()}\n`);
+      process.exit(1);
+    }
+  );
+}
+
+function printJson(obj) {
+  process.stdout.write(`${JSON.stringify(obj)},\n`);
+  records.push(JSON.stringify(obj)) ; 
+}
+
+function* printList(promiseGenerator) {
+  for (const itemPromise of promiseGenerator) {
+    const item = yield itemPromise;
+   records.push(  item) ;
+  }
+  process.stdout.write(`${JSON.stringify(records)}\n`);
+} 
+
+function* getrecordsbyid(promiseGenerator,options2, baseUrl){
+for (const itemPromise of promiseGenerator) {
+    const item = yield itemPromise;
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    
+    const record=  
+      yield oaiPmh.getRecord(item.identifier, options2.metadataPrefix);
+   records.push(  {item ,record }) ;
+      process.stderr.write("processed: "+item.identifier+"\n"); 
+  }
+  process.stdout.write(`{"records":${JSON.stringify(records)}}\n`);
+
+}
+program
+  .command('get-record <baseUrl>')
+  .option('-i, --identifier <id>')
+  .option('-p, --metadata-prefix <prefix>')
+  .action((baseUrl, options) => run(function* listSets() {
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    const result =
+      yield oaiPmh.getRecord(options.identifier, options.metadataPrefix);
+    printJson(result);
+  }));
+
+program
+  .command('identify <baseUrl>')
+  .action(baseUrl => run(function* identify() {
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    const result = yield oaiPmh.identify();
+    printJson(result);
+  }));
+
+program
+  .command('list-identifiers <baseUrl>')
+  .option('-p, --metadata-prefix <prefix>')
+  .option('-f, --from <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-u, --until <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-s, --set <SETSPEC>', 'set specifier, e.g., "math"')
+  .action((baseUrl, _options) => run(function* listIdentifiers() {
+    const options = _.pick(_options, 'metadataPrefix', 'from', 'until', 'set');
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    yield printList(oaiPmh.listIdentifiers(options));
+
+  }));
+program
+  .command('get-records-by-id  <baseUrl>')
+  .option('-p, --metadata-prefix <prefix>')
+  .option('-f, --from <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-u, --until <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-s, --set <SETSPEC>', 'set specifier, e.g., "math"')
+  .action((baseUrl, _options) => run(function* listIdentifiers() {
+    const options = _.pick(_options, 'metadataPrefix', 'from', 'until', 'set');
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    yield getrecordsbyid(oaiPmh.listIdentifiers(options), options,baseUrl);
+
+  }));
+program
+  .command('list-metadata-formats <baseUrl>')
+  .option('-i, --identifier <id>')
+  .action((baseUrl, _options) => run(function* listIdentifiers() {
+    const options = _.pick(_options, 'identifier');
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    const result = yield oaiPmh.listMetadataFormats(options);
+    printJson(result);
+  }));
+
+program
+  .command('list-records <baseUrl>')
+  .option('-p, --metadata-prefix <prefix>')
+  .option('-f, --from <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-u, --until <DATE>', 'from date YYYY-MM-DD or ISO8601')
+  .option('-s, --set <SETSPEC>', 'set specifier, e.g., "math"')
+  .action((baseUrl, _options) => run(function* listRecords() {
+    const options = _.pick(_options, 'metadataPrefix', 'from', 'until', 'set');
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    yield printList(oaiPmh.listRecords(options));
+  }));
+
+program
+  .command('list-sets <baseUrl>')
+  .action(baseUrl => run(function* listSets() {
+    const oaiPmh = new oaiPmhModule.OaiPmh(baseUrl);
+    yield printList(oaiPmh.listSets());
+  }));
+
+program.parse(process.argv);

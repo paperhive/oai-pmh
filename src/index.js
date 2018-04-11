@@ -95,6 +95,9 @@ export class OaiPmh {
 
   // OAI-PMH request with retries for status code 503
   request(options) {
+    options.headers = {
+      'User-Agent': 'oai-pmh'
+    };
     const ctx = this;
     return co(function* _request() {
       let res;

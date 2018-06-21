@@ -2,7 +2,7 @@ import { back as nockBack } from 'nock'
 import path from 'path'
 
 // based on https://github.com/porchdotcom/nock-back-mocha/
-const nockFixtureDir = path.resolve(__dirname, './nockFixtures')
+const nockFixtureDir = path.resolve(__dirname, './nock-fixtures')
 
 export const nockFixtures = function (dir = nockFixtureDir, timeout = 15000) {
   const filenames = []

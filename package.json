@@ -6,7 +6,7 @@
   "scripts": {
     "cover": "nyc npm test",
     "lint": "standard",
-    "test": "mocha -r should -r esm 'test/**/*.js'",
+    "test": "mocha -r should -r esm 'src/**/*.test.js' 'test/**/*.js'",
     "test-cover": "nyc npm test",
     "test-cover-submit": "nyc report --reporter=json && codecov -f coverage/*.json"
   },

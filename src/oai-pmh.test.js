@@ -1,5 +1,7 @@
-import { OaiPmh, OaiPmhError } from '../src/index'
-import { nockFixtures } from './utils'
+import { nockFixtures } from '../test/nock'
+
+import { OaiPmhError } from './errors'
+import { OaiPmh } from './oai-pmh'
 
 const baseUrl = 'http://export.arxiv.org/oai2'
 
@@ -60,8 +62,7 @@ describe('OaiPmh', () => {
         until: '2009-01-02'
       }
       const res = []
-      for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
-        const identifier = await identifierPromise
+      for await (const identifier of oaiPmh.listIdentifiers(options)) {
         res.push(identifier)
       }
       res.should.containDeep([{
@@ -122,8 +123,8 @@ describe('OaiPmh', () => {
         until: '2015-01-03'
       }
       const res = []
-      for (const recordPromise of oaiPmh.listRecords(options)) {
-        res.push(await recordPromise)
+      for await (const record of oaiPmh.listRecords(options)) {
+        res.push(record)
       }
       res.should.containDeep([record])
       res.should.have.length(2)
@@ -134,8 +135,7 @@ describe('OaiPmh', () => {
     it('should list arxiv sets', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
       const res = []
-      for (const setPromise of oaiPmh.listSets()) {
-        const set = await setPromise
+      for await (const set of oaiPmh.listSets()) {
         res.push(set)
       }
       res.should.containDeep([

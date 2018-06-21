@@ -1,74 +1,48 @@
 import { get } from 'lodash'
 
-import { AsyncIterable } from './async-iterable'
 import { parseOaiPmhXml } from './oai-pmh-xml'
 
-// iterable for OAI PMH list results
-export class OaiPmhListIterable extends AsyncIterable {
-  constructor (harvester, verb, field, options = {}) {
-    super()
-    this.harvester = harvester
-    this.verb = verb
-    this.field = field
-    this.options = options
+function getResumptionToken (result, listSize) {
+  const token = result.resumptionToken
+  if (!token) return undefined
+
+  const cursor = get(token, '$.cursor')
+  const completeListSize = get(token, '$.completeListSize')
+  if (!cursor || !completeListSize) return undefined
+
+  if (parseInt(cursor, 10) + listSize >= parseInt(completeListSize, 10)) return undefined
+
+  return token._
+}
+
+export async function * getOaiListItems (oaiPmh, verb, field, options) {
+  const initialResponse = await oaiPmh.request({
+    url: oaiPmh.baseUrl,
+    qs: {
+      ...options,
+      verb
+    }
+  })
+  const initialParsedResponse = await parseOaiPmhXml(initialResponse.body)
+  const initialResult = initialParsedResponse[verb]
+  for (const item of initialResult[field]) {
+    yield item
   }
 
-  async getNext () {
-    if (!this.currentResult ||
-        this.currentIndex >= this.currentResult[this.field].length) {
-      let res
-      // no results yet?
-      if (!this.currentResult) {
-        // send first request
-        const query = {...this.options}
-        query.verb = this.verb
-        res = await this.harvester.request({
-          url: this.harvester.baseUrl,
-          qs: query
-        })
-      } else {
-        // fetch next list
-        res = await this.harvester.request({
-          url: this.harvester.baseUrl,
-          qs: {
-            verb: this.verb,
-            resumptionToken: this.currentResult.resumptionToken._
-          }
-        })
+  let result = initialResult
+  let resumptionToken
+  while ((resumptionToken = getResumptionToken(result, result[field].length))) {
+    const response = await oaiPmh.request({
+      url: oaiPmh.baseUrl,
+      qs: {
+        verb,
+        resumptionToken
       }
-
-      // parse xml
-      const obj = await parseOaiPmhXml(res.body)
-
-      // store current result and initialize index
-      this.currentResult = obj[this.verb]
-      this.currentIndex = 0
+    })
+    const parsedResponse = await parseOaiPmhXml(response.body)
+    result = parsedResponse[verb]
+    for (const item of result[field]) {
+      yield item
     }
-
-    const list = this.currentResult[this.field]
-    const token = this.currentResult.resumptionToken
-    const ret = list[this.currentIndex++]
-
-    // is this the last element?
-    if (this.currentIndex >= list.length) {
-      // do we have a resumption token?
-      if (token) {
-        let cursor = get(token, '$.cursor')
-        let completeListSize = get(token, '$.completeListSize')
-        if (cursor !== undefined && completeListSize !== undefined) {
-          cursor = parseInt(cursor, 10)
-          completeListSize = parseInt(completeListSize, 10)
-          if (cursor + list.length >= completeListSize) {
-            // we got 'em all
-            this.done()
-          }
-        }
-      } else {
-        // no resumption token
-        this.done()
-      }
-    }
-
-    return ret
   }
 }

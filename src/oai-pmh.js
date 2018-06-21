@@ -3,7 +3,7 @@ import { assign, get } from 'lodash'
 import request from 'request'
 
 import { OaiPmhError } from './errors'
-import { OaiPmhListIterable } from './oai-pmh-list'
+import { getOaiListItems } from './oai-pmh-list'
 import { parseOaiPmhXml } from './oai-pmh-xml'
 import { sleep } from './utils'
 
@@ -110,7 +110,7 @@ export class OaiPmh {
   }
 
   listIdentifiers (options = {}) {
-    return new OaiPmhListIterable(this, 'ListIdentifiers', 'header', options)
+    return getOaiListItems(this, 'ListIdentifiers', 'header', options)
   }
 
   async listMetadataFormats (options = {}) {
@@ -131,10 +131,10 @@ export class OaiPmh {
   }
 
   listRecords (options) {
-    return new OaiPmhListIterable(this, 'ListRecords', 'record', options)
+    return getOaiListItems(this, 'ListRecords', 'record', options)
   }
 
   listSets () {
-    return new OaiPmhListIterable(this, 'ListSets', 'set')
+    return getOaiListItems(this, 'ListSets', 'set')
   }
 }

@@ -1,0 +1,24 @@
+[
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?verb=Identify",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2018-06-21T14:30:13Z</responseDate>\n<request verb=\"Identify\">http://export.arxiv.org/oai2</request>\n<Identify>\n<repositoryName>arXiv</repositoryName>\n<baseURL>http://export.arxiv.org/oai2</baseURL>\n<protocolVersion>2.0</protocolVersion>\n<adminEmail>help@arxiv.org</adminEmail>\n<earliestDatestamp>2007-05-23</earliestDatestamp>\n<deletedRecord>persistent</deletedRecord>\n<granularity>YYYY-MM-DD</granularity>\n<description>\n<eprints xmlns=\"http://www.openarchives.org/OAI/1.1/eprints\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/1.1/eprints http://www.openarchives.org/OAI/1.1/eprints.xsd\">\n <content>\n  <text>Author self-archived e-prints</text>\n </content>\n <metadataPolicy>\n  <text>Metadata harvesting permitted through OAI interface</text>\n  <URL>http://arxiv.org/help/oa/metadataPolicy</URL>\n </metadataPolicy>\n <dataPolicy>\n  <text>Full-content harvesting not permitted (except by special arrangement)</text>\n  <URL>http://arxiv.org/help/oa/dataPolicy</URL>\n </dataPolicy>\n <submissionPolicy>\n  <text>Author self-submission preferred, submissions screened for appropriateness.</text>\n  <URL>http://arxiv.org/help/submit</URL>\n </submissionPolicy>\n</eprints>\n</description>\n<description>\n<branding xmlns=\"http://www.openarchives.org/OAI/2.0/branding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/branding/ http://www.openarchives.org/OAI/2.0/branding.xsd\">\n <collectionIcon>\n <url>http://arxiv.org/OAI/arXivLogo.png</url>\n <link>http://arxiv.org/</link>\n <title>arXiv e-print archive</title>\n <width>88</width>\n <height>31</height>\n </collectionIcon>\n<metadataRendering metadataNamespace=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" mimeType=\"text/xsl\">http://arxiv.org/OAI/arXivMetadata.xsl</metadataRendering>\n</branding>\n</description>\n</Identify>\n</OAI-PMH>\n",
+        "rawHeaders": [
+            "Date",
+            "Thu, 21 Jun 2018 14:30:12 GMT",
+            "Server",
+            "Apache",
+            "Vary",
+            "Accept-Encoding,User-Agent",
+            "Connection",
+            "close",
+            "Transfer-Encoding",
+            "chunked",
+            "Content-Type",
+            "text/xml"
+        ]
+    }
+]

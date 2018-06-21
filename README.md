@@ -1,4 +1,7 @@
-# OAI PMH [![travis-ci](https://travis-ci.org/paperhive/oai-pmh.svg?branch=master)](https://travis-ci.org/paperhive/oai-pmh) [![codecov.io](https://codecov.io/github/paperhive/oai-pmh/coverage.svg?branch=master)](https://codecov.io/github/paperhive/oai-pmh?branch=master) [![npm](https://img.shields.io/npm/v/oai-pmh.svg)](https://www.npmjs.com/package/oai-pmh)
+# OAI PMH
+[![travis-ci](https://travis-ci.org/paperhive/oai-pmh.svg?branch=master)](https://travis-ci.org/paperhive/oai-pmh)
+[![codecov.io](https://codecov.io/github/paperhive/oai-pmh/coverage.svg?branch=master)](https://codecov.io/github/paperhive/oai-pmh?branch=master)
+[![npm](https://img.shields.io/npm/v/oai-pmh.svg)](https://www.npmjs.com/package/oai-pmh)
 
 A nodejs module for the Open Archives Initiative Protocol for Metadata Harvesting ([OAI-PMH 2.0](http://www.openarchives.org/OAI/openarchivesprotocol.html)). Use this module if you want to harvest metadata from OAI-PMH providers, e.g., [arxiv](http://arxiv.org/).
 
@@ -15,14 +18,12 @@ npm install oai-pmh
 import { OaiPmh } from 'oai-pmh';
 
 const oaiPmh = new OaiPmh('http://export.arxiv.org/oai2');
-const iterator = oaiPmh.listIdentifiers({from: '2017-11-01'});
-for (const getNext of iterator) {
-  const item = await getNext;
-  // do something with item
+for await (const identifier of oaiPmh.listIdentifiers({from: '2017-11-01'})) {
+  // do something with identifier
 }
 ```
 
-See [OaiPmh in index.js](https://github.com/paperhive/oai-pmh/blob/master/src/index.js)
+See [OaiPmh in oai-pmh.js](https://github.com/paperhive/oai-pmh/blob/master/src/oai-pmh.js)
 for all available commands.
 
 

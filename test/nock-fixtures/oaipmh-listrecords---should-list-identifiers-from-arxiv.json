@@ -1,0 +1,48 @@
+[
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?metadataPrefix=arXiv&from=2015-01-01&until=2015-01-03&verb=ListRecords",
+        "body": "",
+        "status": 503,
+        "response": "<html><body>\n<h1>Retry after 10 seconds</h1>\n</body></html>\n",
+        "rawHeaders": [
+            "Date",
+            "Thu, 21 Jun 2018 14:30:51 GMT",
+            "Server",
+            "Apache",
+            "Retry-After",
+            "10",
+            "Vary",
+            "Accept-Encoding,User-Agent",
+            "Content-Length",
+            "60",
+            "Connection",
+            "close",
+            "Content-Type",
+            "text/html"
+        ]
+    },
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?metadataPrefix=arXiv&from=2015-01-01&until=2015-01-03&verb=ListRecords",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2018-06-21T14:31:04Z</responseDate>\n<request verb=\"ListRecords\" until=\"2015-01-03\" from=\"2015-01-01\" metadataPrefix=\"arXiv\">http://export.arxiv.org/oai2</request>\n<ListRecords>\n<record>\n<header>\n <identifier>oai:arXiv.org:1412.8544</identifier>\n <datestamp>2015-01-03</datestamp>\n <setSpec>cs</setSpec>\n</header>\n<metadata>\n <arXiv xmlns=\"http://arxiv.org/OAI/arXiv/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://arxiv.org/OAI/arXiv/ http://arxiv.org/OAI/arXiv.xsd\">\n <id>1412.8544</id><created>2014-12-29</created><authors><author><keyname>Uijlen</keyname><forenames>Sander</forenames><affiliation>Radboud Universiteit</affiliation></author><author><keyname>Westerbaan</keyname><forenames>Bas</forenames><affiliation>Radboud Universiteit</affiliation></author></authors><title>A Kochen-Specker system has at least 22 vectors (extended abstract)</title><categories>cs.DM</categories><comments>In Proceedings QPL 2014, arXiv:1412.8102</comments><proxy>EPTCS</proxy><journal-ref>EPTCS 172, 2014, pp. 154-164</journal-ref><doi>10.4204/EPTCS.172.11</doi><license>http://arxiv.org/licenses/nonexclusive-distrib/1.0/</license><abstract>  At the heart of the Conway-Kochen Free Will theorem and Kochen and Specker's\nargument against non-contextual hidden variable theories is the existence of a\nKochen-Specker (KS) system: a set of points on the sphere that has no\n0,1-coloring such that at most one of two orthogonal points are colored 1 and\nof three pairwise orthogonal points exactly one is colored 1. In public\nlectures, Conway encouraged the search for small KS systems. At the time of\nwriting, the smallest known KS system has 31 vectors. Arends, Ouaknine and\nWampler have shown that a KS system has at least 18 vectors, by reducing the\nproblem to the existence of graphs with a topological embeddability and\nnon-colorability property. The bottleneck in their search proved to be the\nsheer number of graphs on more than 17 vertices and deciding embeddability.\n  Continuing their effort, we prove a restriction on the class of graphs we\nneed to consider and develop a more practical decision procedure for\nembeddability to improve the lower bound to 22.\n</abstract></arXiv>\n</metadata>\n</record>\n<record>\n<header>\n <identifier>oai:arXiv.org:hep-th/9504118</identifier>\n <datestamp>2015-01-03</datestamp>\n <setSpec>physics:hep-th</setSpec>\n</header>\n<metadata>\n <arXiv xmlns=\"http://arxiv.org/OAI/arXiv/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://arxiv.org/OAI/arXiv/ http://arxiv.org/OAI/arXiv.xsd\">\n <id>hep-th/9504118</id><created>1995-04-24</created><authors><author><keyname>Requardt</keyname><forenames>M.</forenames></author></authors><title>Discrete Mathematics and Physics on the Planck-Scale</title><categories>hep-th</categories><comments>21 pages, Latex</comments><report-no>GOET-TP 101/95</report-no><abstract>  Starting from the hypothesis that both physics, in particular space-time and\nthe physical vacuum, and the corresponding mathematics are discrete on the\nPlanck scale we develop a certain framework in form of a '{\\it cellular\nnetwork}' consisting of cells interacting with each other via bonds. Both the\ninternal states of the cells and the &quot;strength&quot; of the bonds are assumed to be\ndynamical variables. In section 3 the basis is laid for a version of '{\\it\ndiscrete analysis}' which, starting from different, perhaps more physically\noriented principles, manages to make contact with the much more abstract\nmachinery of Connes et al. and may complement the latter approach. In section 4\na, as far as we can see, new concept of '{\\it topological dimension}' in form\nof a '{\\it degree of connectivity}' for graphs, networks and the like is\ndeveloped. It is then indicated how this '{\\it dimension}', which for\ncontinuous structures or lattices being embedded in a continuous background\nagrees with the usual notion of dimension, may change dynamically as a result\nof a '{\\it phase transition like}' change in '{\\it connectivity}' in the\nnetwork. A certain speculative argument, along the lines of statistical\nmechanics, is supplied in favor of the naturalness of dimension 4 of ordinary\n(classical) space-time.\n</abstract></arXiv>\n</metadata>\n</record>\n</ListRecords>\n</OAI-PMH>\n",
+        "rawHeaders": [
+            "Date",
+            "Thu, 21 Jun 2018 14:31:02 GMT",
+            "Server",
+            "Apache",
+            "Vary",
+            "Accept-Encoding,User-Agent",
+            "Connection",
+            "close",
+            "Transfer-Encoding",
+            "chunked",
+            "Content-Type",
+            "text/xml"
+        ]
+    }
+]

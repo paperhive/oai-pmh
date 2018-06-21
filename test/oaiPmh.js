@@ -1,40 +1,40 @@
-import { OaiPmh, OaiPmhError } from '../src/index';
-import { mochaAsync, nockFixtures } from './utils';
+import { OaiPmh, OaiPmhError } from '../src/index'
+import { mochaAsync, nockFixtures } from './utils'
 
-const baseUrl = 'http://export.arxiv.org/oai2';
+const baseUrl = 'http://export.arxiv.org/oai2'
 
 const record = {
   header: {
     identifier: 'oai:arXiv.org:1412.8544',
     datestamp: '2015-01-03',
-    setSpec: 'cs',
+    setSpec: 'cs'
   },
   metadata: {
     arXiv: {
       created: '2014-12-29',
-      id: '1412.8544',
-    },
-  },
-};
+      id: '1412.8544'
+    }
+  }
+}
 
 describe('OaiPmh', () => {
   // set up nock, nock, nock'in on heaven's door
-  const nockFixture = nockFixtures();
-  beforeEach(nockFixture.beforeEach);
-  afterEach(nockFixture.afterEach);
+  const nockFixture = nockFixtures()
+  beforeEach(nockFixture.beforeEach)
+  afterEach(nockFixture.afterEach)
 
   describe('getRecord()', () => {
-    it('should get a record', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
-      const res = yield oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv');
-      res.should.containDeep(record);
-    }));
-  });
+    it('should get a record', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
+      const res = yield oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv')
+      res.should.containDeep(record)
+    }))
+  })
 
   describe('identify()', () => {
-    it('should identify arxiv', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
-      const res = yield oaiPmh.identify();
+    it('should identify arxiv', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
+      const res = yield oaiPmh.identify()
       res.should.containDeep({
         repositoryName: 'arXiv',
         baseURL: 'http://export.arxiv.org/oai2',
@@ -42,101 +42,101 @@ describe('OaiPmh', () => {
         adminEmail: 'help@arxiv.org',
         earliestDatestamp: '2007-05-23',
         deletedRecord: 'persistent',
-        granularity: 'YYYY-MM-DD',
-      });
-    }));
-  });
+        granularity: 'YYYY-MM-DD'
+      })
+    }))
+  })
 
   describe('listIdentifiers()', function () {
     // the first request to arxiv always fails with 503 and a
     // "retry after 20 seconds" message (which is OAI-PMH-compliant)
-    this.timeout(90000);
+    this.timeout(90000)
 
-    it('should list identifiers from arxiv', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
+    it('should list identifiers from arxiv', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
       const options = {
         metadataPrefix: 'arXiv',
         from: '2015-01-01',
-        until: '2015-03-01',
-      };
-      const res = [];
+        until: '2015-03-01'
+      }
+      const res = []
       for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
-        const identifier = yield identifierPromise;
-        res.push(identifier);
+        const identifier = yield identifierPromise
+        res.push(identifier)
       }
       res.should.containDeep([{
         identifier: 'oai:arXiv.org:1412.8544',
         datestamp: '2015-01-03',
-        setSpec: 'cs',
-      }]);
-      res.should.have.length(5);
-    }));
-  });
+        setSpec: 'cs'
+      }])
+      res.should.have.length(5)
+    }))
+  })
 
   describe('listMetadataFormats()', () => {
     const metadataFormats = [
       {
         metadataPrefix: 'oai_dc',
         schema: 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd',
-        metadataNamespace: 'http://www.openarchives.org/OAI/2.0/oai_dc/',
+        metadataNamespace: 'http://www.openarchives.org/OAI/2.0/oai_dc/'
       },
       {
         metadataPrefix: 'arXiv',
         schema: 'http://arxiv.org/OAI/arXiv.xsd',
-        metadataNamespace: 'http://arxiv.org/OAI/arXiv/',
-      },
-    ];
+        metadataNamespace: 'http://arxiv.org/OAI/arXiv/'
+      }
+    ]
 
-    it('should list metadata formats for arxiv', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
-      const res = yield oaiPmh.listMetadataFormats();
-      res.should.containDeep(metadataFormats);
-    }));
+    it('should list metadata formats for arxiv', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
+      const res = yield oaiPmh.listMetadataFormats()
+      res.should.containDeep(metadataFormats)
+    }))
 
-    it('should list metadata formats for arxiv id 1208.0264', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
+    it('should list metadata formats for arxiv id 1208.0264', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
       const res = yield oaiPmh.listMetadataFormats({
-        identifier: 'oai:arXiv.org:1208.0264',
-      });
-      res.should.containDeep(metadataFormats);
-    }));
+        identifier: 'oai:arXiv.org:1208.0264'
+      })
+      res.should.containDeep(metadataFormats)
+    }))
 
-    it('should fail for non-existent arxiv id lolcat', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
+    it('should fail for non-existent arxiv id lolcat', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
       oaiPmh.listMetadataFormats({
-        identifier: 'oai:arXiv.org:lolcat',
-      }).should.be.rejectedWith(OaiPmhError);
-    }));
-  });
+        identifier: 'oai:arXiv.org:lolcat'
+      }).should.be.rejectedWith(OaiPmhError)
+    }))
+  })
 
   describe('listRecords()', function () {
     // the first request to arxiv always fails with 503 and a
     // "retry after 20 seconds" message (which is OAI-PMH-compliant)
-    this.timeout(30000);
+    this.timeout(30000)
 
-    it('should list identifiers from arxiv', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
+    it('should list identifiers from arxiv', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
       const options = {
         metadataPrefix: 'arXiv',
         from: '2015-01-01',
-        until: '2015-01-03',
-      };
-      const res = [];
-      for (const recordPromise of oaiPmh.listRecords(options)) {
-        res.push(yield recordPromise);
+        until: '2015-01-03'
       }
-      res.should.containDeep([record]);
-      res.should.have.length(2);
-    }));
-  });
+      const res = []
+      for (const recordPromise of oaiPmh.listRecords(options)) {
+        res.push(yield recordPromise)
+      }
+      res.should.containDeep([record])
+      res.should.have.length(2)
+    }))
+  })
 
   describe('listSets()', () => {
-    it('should list arxiv sets', mochaAsync(function* () {
-      const oaiPmh = new OaiPmh(baseUrl);
-      const res = [];
+    it('should list arxiv sets', mochaAsync(function * () {
+      const oaiPmh = new OaiPmh(baseUrl)
+      const res = []
       for (const setPromise of oaiPmh.listSets()) {
-        const set = yield setPromise;
-        res.push(set);
+        const set = yield setPromise
+        res.push(set)
       }
       res.should.containDeep([
         { setSpec: 'cs', setName: 'Computer Science' },
@@ -145,8 +145,8 @@ describe('OaiPmh', () => {
         { setSpec: 'physics:astro-ph', setName: 'Astrophysics' },
         { setSpec: 'q-bio', setName: 'Quantitative Biology' },
         { setSpec: 'q-fin', setName: 'Quantitative Finance' },
-        { setSpec: 'stat', setName: 'Statistics' },
-      ]);
-    }));
-  });
-});
+        { setSpec: 'stat', setName: 'Statistics' }
+      ])
+    }))
+  })
+})

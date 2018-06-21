@@ -20,9 +20,8 @@ function printJson (obj) {
   process.stdout.write(`${JSON.stringify(obj)}\n`)
 }
 
-function * printList (promiseGenerator) {
-  for (const itemPromise of promiseGenerator) {
-    const item = yield itemPromise
+async function printList (asyncGenerator) {
+  for await (const item of asyncGenerator) {
     printJson(item)
   }
 }

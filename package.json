@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/paperhive/oai-pmh#readme",
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
     "codecov": "^3.0.2",
     "mocha": "^5.2.0",
     "nock": "^9.3.3",
@@ -48,6 +49,7 @@
   "standard": {
     "env": {
       "mocha": true
-    }
+    },
+    "parser": "babel-eslint"
   }
 }

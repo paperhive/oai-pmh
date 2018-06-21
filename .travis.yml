@@ -4,6 +4,6 @@ node_js:
 sudo: false
 script:
     - npm run lint
-    - npm test
+    - npm run test-cover
 after_success:
-    - npm run codecov
+    - npm run test-cover-submit

@@ -4,11 +4,12 @@
   "description": "OAI-PMH harvester module for nodejs",
   "main": "dist/index.js",
   "scripts": {
-    "cover": "babel-node ./node_modules/.bin/isparta cover ./node_modules/mocha/bin/_mocha test/",
-    "codecov": "npm run cover && codecov",
+    "cover": "nyc npm test",
     "lint": "standard",
     "prepublish": "babel -d dist src/",
-    "test": "babel-node ./node_modules/mocha/bin/_mocha"
+    "test": "mocha",
+    "test-cover": "nyc npm test",
+    "test-cover-submit": "nyc report --reporter=json && codecov -f coverage/*.json"
   },
   "bin": {
     "oai-pmh": "./bin/oai-pmh"
@@ -33,9 +34,9 @@
     "babel-cli": "^6.4.5",
     "babel-preset-es2015": "^6.3.13",
     "codecov": "^1.0.1",
-    "isparta": "^4.0.0",
     "mocha": "^2.4.5",
     "nock": "^7.0.2",
+    "nyc": "^12.0.2",
     "should": "^8.2.1",
     "standard": "^11.0.1"
   },

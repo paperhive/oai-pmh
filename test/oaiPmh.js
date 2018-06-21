@@ -56,8 +56,8 @@ describe('OaiPmh', () => {
       const oaiPmh = new OaiPmh(baseUrl)
       const options = {
         metadataPrefix: 'arXiv',
-        from: '2015-01-01',
-        until: '2015-03-01'
+        from: '2009-01-01',
+        until: '2009-01-02'
       }
       const res = []
       for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
@@ -65,11 +65,11 @@ describe('OaiPmh', () => {
         res.push(identifier)
       }
       res.should.containDeep([{
-        identifier: 'oai:arXiv.org:1412.8544',
-        datestamp: '2015-01-03',
-        setSpec: 'cs'
+        identifier: 'oai:arXiv.org:0807.0148',
+        datestamp: '2009-01-01',
+        setSpec: 'physics:hep-ex'
       }])
-      res.should.have.length(5)
+      res.should.have.length(86)
     })
   })
 

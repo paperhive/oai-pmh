@@ -5,14 +5,20 @@
         "path": "/oai2?verb=ListSets",
         "body": "",
         "status": 200,
-        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2016-02-08T10:34:32Z</responseDate>\n<request verb=\"ListSets\">http://export.arxiv.org/oai2</request>\n<ListSets>\n<set>\n <setSpec>cs</setSpec>\n <setName>Computer Science</setName>\n</set>\n<set>\n <setSpec>math</setSpec>\n <setName>Mathematics</setName>\n</set>\n<set>\n <setSpec>physics</setSpec>\n <setName>Physics</setName>\n</set>\n<set>\n <setSpec>physics:astro-ph</setSpec>\n <setName>Astrophysics</setName>\n</set>\n<set>\n <setSpec>physics:cond-mat</setSpec>\n <setName>Condensed Matter</setName>\n</set>\n<set>\n <setSpec>physics:gr-qc</setSpec>\n <setName>General Relativity and Quantum Cosmology</setName>\n</set>\n<set>\n <setSpec>physics:hep-ex</setSpec>\n <setName>High Energy Physics - Experiment</setName>\n</set>\n<set>\n <setSpec>physics:hep-lat</setSpec>\n <setName>High Energy Physics - Lattice</setName>\n</set>\n<set>\n <setSpec>physics:hep-ph</setSpec>\n <setName>High Energy Physics - Phenomenology</setName>\n</set>\n<set>\n <setSpec>physics:hep-th</setSpec>\n <setName>High Energy Physics - Theory</setName>\n</set>\n<set>\n <setSpec>physics:math-ph</setSpec>\n <setName>Mathematical Physics</setName>\n</set>\n<set>\n <setSpec>physics:nlin</setSpec>\n <setName>Nonlinear Sciences</setName>\n</set>\n<set>\n <setSpec>physics:nucl-ex</setSpec>\n <setName>Nuclear Experiment</setName>\n</set>\n<set>\n <setSpec>physics:nucl-th</setSpec>\n <setName>Nuclear Theory</setName>\n</set>\n<set>\n <setSpec>physics:physics</setSpec>\n <setName>Physics (Other)</setName>\n</set>\n<set>\n <setSpec>physics:quant-ph</setSpec>\n <setName>Quantum Physics</setName>\n</set>\n<set>\n <setSpec>q-bio</setSpec>\n <setName>Quantitative Biology</setName>\n</set>\n<set>\n <setSpec>q-fin</setSpec>\n <setName>Quantitative Finance</setName>\n</set>\n<set>\n <setSpec>stat</setSpec>\n <setName>Statistics</setName>\n</set>\n</ListSets>\n</OAI-PMH>\n",
-        "headers": {
-            "date": "Mon, 08 Feb 2016 10:34:31 GMT",
-            "server": "Apache",
-            "vary": "Accept-Encoding,User-Agent",
-            "connection": "close",
-            "transfer-encoding": "chunked",
-            "content-type": "text/xml"
-        }
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<OAI-PMH xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n<responseDate>2018-06-21T14:31:06Z</responseDate>\n<request verb=\"ListSets\">http://export.arxiv.org/oai2</request>\n<ListSets>\n<set>\n <setSpec>cs</setSpec>\n <setName>Computer Science</setName>\n</set>\n<set>\n <setSpec>econ</setSpec>\n <setName>Economics</setName>\n</set>\n<set>\n <setSpec>eess</setSpec>\n <setName>Electrical Engineering and Systems Science</setName>\n</set>\n<set>\n <setSpec>math</setSpec>\n <setName>Mathematics</setName>\n</set>\n<set>\n <setSpec>physics</setSpec>\n <setName>Physics</setName>\n</set>\n<set>\n <setSpec>physics:astro-ph</setSpec>\n <setName>Astrophysics</setName>\n</set>\n<set>\n <setSpec>physics:cond-mat</setSpec>\n <setName>Condensed Matter</setName>\n</set>\n<set>\n <setSpec>physics:gr-qc</setSpec>\n <setName>General Relativity and Quantum Cosmology</setName>\n</set>\n<set>\n <setSpec>physics:hep-ex</setSpec>\n <setName>High Energy Physics - Experiment</setName>\n</set>\n<set>\n <setSpec>physics:hep-lat</setSpec>\n <setName>High Energy Physics - Lattice</setName>\n</set>\n<set>\n <setSpec>physics:hep-ph</setSpec>\n <setName>High Energy Physics - Phenomenology</setName>\n</set>\n<set>\n <setSpec>physics:hep-th</setSpec>\n <setName>High Energy Physics - Theory</setName>\n</set>\n<set>\n <setSpec>physics:math-ph</setSpec>\n <setName>Mathematical Physics</setName>\n</set>\n<set>\n <setSpec>physics:nlin</setSpec>\n <setName>Nonlinear Sciences</setName>\n</set>\n<set>\n <setSpec>physics:nucl-ex</setSpec>\n <setName>Nuclear Experiment</setName>\n</set>\n<set>\n <setSpec>physics:nucl-th</setSpec>\n <setName>Nuclear Theory</setName>\n</set>\n<set>\n <setSpec>physics:physics</setSpec>\n <setName>Physics (Other)</setName>\n</set>\n<set>\n <setSpec>physics:quant-ph</setSpec>\n <setName>Quantum Physics</setName>\n</set>\n<set>\n <setSpec>q-bio</setSpec>\n <setName>Quantitative Biology</setName>\n</set>\n<set>\n <setSpec>q-fin</setSpec>\n <setName>Quantitative Finance</setName>\n</set>\n<set>\n <setSpec>stat</setSpec>\n <setName>Statistics</setName>\n</set>\n</ListSets>\n</OAI-PMH>\n",
+        "rawHeaders": [
+            "Date",
+            "Thu, 21 Jun 2018 14:31:04 GMT",
+            "Server",
+            "Apache",
+            "Vary",
+            "Accept-Encoding,User-Agent",
+            "Connection",
+            "close",
+            "Transfer-Encoding",
+            "chunked",
+            "Content-Type",
+            "text/xml"
+        ]
     }
 ]

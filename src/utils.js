@@ -1,5 +1,4 @@
 import { promisify } from 'bluebird'
-import co from 'co'
 import { get } from 'lodash'
 import { parseString } from 'xml2js'
 
@@ -15,9 +14,9 @@ export class OaiPmhError extends Error {
 }
 
 // test if the parsed xml contains an error
-export const parseOaiPmhXml = co.wrap(function * _parseOaiPmhXml (xml) {
+export async function parseOaiPmhXml (xml) {
   // parse xml into js object
-  const obj = yield promisify(parseString)(xml, {
+  const obj = await promisify(parseString)(xml, {
     explicitArray: false,
     trim: true,
     normalize: true
@@ -38,12 +37,11 @@ export const parseOaiPmhXml = co.wrap(function * _parseOaiPmhXml (xml) {
   }
 
   return oaiPmh
-})
+}
 
-// sleep via promise
-export const sleep = co.wrap(function * _sleep (seconds) {
+export async function sleep (seconds) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
-})
+}
 
 export class AsyncIterable {
   constructor () {
@@ -69,7 +67,7 @@ export class AsyncIterable {
 
         // make sure that no promise is currently running
         if (this.running) {
-          throw new Error('There is still a promise running. Did you forget to yield it?')
+          throw new Error('There is still a promise running. Did you forget to await it?')
         }
 
         // make sure that the last promise wasn't rejected

@@ -1,5 +1,5 @@
 import { OaiPmh, OaiPmhError } from '../src/index'
-import { mochaAsync, nockFixtures } from './utils'
+import { nockFixtures } from './utils'
 
 const baseUrl = 'http://export.arxiv.org/oai2'
 
@@ -24,17 +24,17 @@ describe('OaiPmh', () => {
   afterEach(nockFixture.afterEach)
 
   describe('getRecord()', () => {
-    it('should get a record', mochaAsync(function * () {
+    it('should get a record', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
-      const res = yield oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv')
+      const res = await oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv')
       res.should.containDeep(record)
-    }))
+    })
   })
 
   describe('identify()', () => {
-    it('should identify arxiv', mochaAsync(function * () {
+    it('should identify arxiv', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
-      const res = yield oaiPmh.identify()
+      const res = await oaiPmh.identify()
       res.should.containDeep({
         repositoryName: 'arXiv',
         baseURL: 'http://export.arxiv.org/oai2',
@@ -44,7 +44,7 @@ describe('OaiPmh', () => {
         deletedRecord: 'persistent',
         granularity: 'YYYY-MM-DD'
       })
-    }))
+    })
   })
 
   describe('listIdentifiers()', function () {
@@ -52,7 +52,7 @@ describe('OaiPmh', () => {
     // "retry after 20 seconds" message (which is OAI-PMH-compliant)
     this.timeout(90000)
 
-    it('should list identifiers from arxiv', mochaAsync(function * () {
+    it('should list identifiers from arxiv', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
       const options = {
         metadataPrefix: 'arXiv',
@@ -61,7 +61,7 @@ describe('OaiPmh', () => {
       }
       const res = []
       for (const identifierPromise of oaiPmh.listIdentifiers(options)) {
-        const identifier = yield identifierPromise
+        const identifier = await identifierPromise
         res.push(identifier)
       }
       res.should.containDeep([{
@@ -70,7 +70,7 @@ describe('OaiPmh', () => {
         setSpec: 'cs'
       }])
       res.should.have.length(5)
-    }))
+    })
   })
 
   describe('listMetadataFormats()', () => {
@@ -87,26 +87,26 @@ describe('OaiPmh', () => {
       }
     ]
 
-    it('should list metadata formats for arxiv', mochaAsync(function * () {
+    it('should list metadata formats for arxiv', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
-      const res = yield oaiPmh.listMetadataFormats()
+      const res = await oaiPmh.listMetadataFormats()
       res.should.containDeep(metadataFormats)
-    }))
+    })
 
-    it('should list metadata formats for arxiv id 1208.0264', mochaAsync(function * () {
+    it('should list metadata formats for arxiv id 1208.0264', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
-      const res = yield oaiPmh.listMetadataFormats({
+      const res = await oaiPmh.listMetadataFormats({
         identifier: 'oai:arXiv.org:1208.0264'
       })
       res.should.containDeep(metadataFormats)
-    }))
+    })
 
-    it('should fail for non-existent arxiv id lolcat', mochaAsync(function * () {
+    it('should fail for non-existent arxiv id lolcat', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
       oaiPmh.listMetadataFormats({
         identifier: 'oai:arXiv.org:lolcat'
       }).should.be.rejectedWith(OaiPmhError)
-    }))
+    })
   })
 
   describe('listRecords()', function () {
@@ -114,7 +114,7 @@ describe('OaiPmh', () => {
     // "retry after 20 seconds" message (which is OAI-PMH-compliant)
     this.timeout(30000)
 
-    it('should list identifiers from arxiv', mochaAsync(function * () {
+    it('should list identifiers from arxiv', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
       const options = {
         metadataPrefix: 'arXiv',
@@ -123,19 +123,19 @@ describe('OaiPmh', () => {
       }
       const res = []
       for (const recordPromise of oaiPmh.listRecords(options)) {
-        res.push(yield recordPromise)
+        res.push(await recordPromise)
       }
       res.should.containDeep([record])
       res.should.have.length(2)
-    }))
+    })
   })
 
   describe('listSets()', () => {
-    it('should list arxiv sets', mochaAsync(function * () {
+    it('should list arxiv sets', async () => {
       const oaiPmh = new OaiPmh(baseUrl)
       const res = []
       for (const setPromise of oaiPmh.listSets()) {
-        const set = yield setPromise
+        const set = await setPromise
         res.push(set)
       }
       res.should.containDeep([
@@ -147,6 +147,6 @@ describe('OaiPmh', () => {
         { setSpec: 'q-fin', setName: 'Quantitative Finance' },
         { setSpec: 'stat', setName: 'Statistics' }
       ])
-    }))
+    })
   })
 })

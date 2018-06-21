@@ -1,4 +1,4 @@
-import { promisify } from 'bluebird'
+import { promisify } from 'util'
 import { get } from 'lodash'
 import { parseString } from 'xml2js'
 

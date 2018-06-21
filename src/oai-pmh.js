@@ -1,7 +1,8 @@
-import { promisify } from 'bluebird'
 import { assign, get } from 'lodash'
 import request from 'request'
+import { promisify } from 'util'
 
+import pkg from '../package.json'
 import { OaiPmhError } from './errors'
 import { getOaiListItems } from './oai-pmh-list'
 import { parseOaiPmhXml } from './oai-pmh-xml'
@@ -14,6 +15,7 @@ export class OaiPmh {
 
     // default options
     this.options = {
+      userAgent: `oai-pmh/${pkg.version} (https://github.com/paperhive/oai-pmh)`,
       retry: true, // automatically retry in case of status code 503
       retryMin: 5, // wait at least 5 seconds
       retryMax: 600 // wait at maximum 600 seconds
@@ -28,7 +30,13 @@ export class OaiPmh {
 
     // loop until request succeeds (with retry: true)
     do {
-      res = await promisify(request)(options)
+      res = await promisify(request)({
+        ...options,
+        headers: {
+          ...(options.headers || {}),
+          'User-Agent': this.options.userAgent
+        }
+      })
 
       // retry?
       if (res.statusCode === 503 && this.options.retry) {

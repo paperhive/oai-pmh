@@ -1,1 +1,7 @@
-test/nock-fixtures
+.nycrc
+.nyc_output
+.travis.yml
+coverage
+src/**/*.test.js
+test
+*.tgz

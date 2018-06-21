@@ -2,7 +2,7 @@ import { promisify } from 'bluebird'
 import { get } from 'lodash'
 import { parseString } from 'xml2js'
 
-import { OaiPmhError } from './utils'
+import { OaiPmhError } from './errors'
 
 // test if the parsed xml contains an error
 export async function parseOaiPmhXml (xml) {

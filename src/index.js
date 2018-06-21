@@ -4,6 +4,8 @@ import request from 'request'
 
 import { AsyncIterable, OaiPmhError, parseOaiPmhXml, sleep } from './utils'
 
+export { OaiPmhError }
+
 // iterable for OAI PMH list results
 class OaiPmhListIterable extends AsyncIterable {
   constructor (harvester, verb, field, options = {}) {

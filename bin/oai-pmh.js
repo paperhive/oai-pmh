@@ -72,17 +72,17 @@ program
   .option('-f, --from <DATE>', 'from date YYYY-MM-DD or ISO8601')
   .option('-u, --until <DATE>', 'from date YYYY-MM-DD or ISO8601')
   .option('-s, --set <SETSPEC>', 'set specifier, e.g., "math"')
-  .action((baseUrl, _options) => run(function * listRecords () {
+  .action((baseUrl, _options) => wrapAsync(async () => {
     const options = pick(_options, 'metadataPrefix', 'from', 'until', 'set')
     const oaiPmh = new OaiPmh(baseUrl)
-    yield printList(oaiPmh.listRecords(options))
+    await printList(oaiPmh.listRecords(options))
   }))
 
 program
   .command('list-sets <baseUrl>')
-  .action(baseUrl => run(function * listSets () {
+  .action(baseUrl => wrapAsync(async () => {
     const oaiPmh = new OaiPmh(baseUrl)
-    yield printList(oaiPmh.listSets())
+    await printList(oaiPmh.listSets())
   }))
 
 program.parse(process.argv)

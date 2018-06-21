@@ -18,14 +18,12 @@ npm install oai-pmh
 import { OaiPmh } from 'oai-pmh';
 
 const oaiPmh = new OaiPmh('http://export.arxiv.org/oai2');
-const iterator = oaiPmh.listIdentifiers({from: '2017-11-01'});
-for (const getNext of iterator) {
-  const item = await getNext;
-  // do something with item
+for await (const identifier of oaiPmh.listIdentifiers({from: '2017-11-01'})) {
+  // do something with identifier
 }
 ```
 
-See [OaiPmh in index.js](https://github.com/paperhive/oai-pmh/blob/master/src/index.js)
+See [OaiPmh in oai-pmh.js](https://github.com/paperhive/oai-pmh/blob/master/src/oai-pmh.js)
 for all available commands.
 
 

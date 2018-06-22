@@ -6,11 +6,15 @@ function getResumptionToken (result, listSize) {
   const token = result.resumptionToken
   if (!token) return undefined
 
+  if (typeof token === 'string') return token
+
   const cursor = get(token, '$.cursor')
   const completeListSize = get(token, '$.completeListSize')
-  if (!cursor || !completeListSize) return undefined
-
-  if (parseInt(cursor, 10) + listSize >= parseInt(completeListSize, 10)) return undefined
+  if (
+    cursor &&
+    completeListSize &&
+    parseInt(cursor, 10) + listSize >= parseInt(completeListSize, 10)
+  ) return undefined
 
   return token._
 }

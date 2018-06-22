@@ -3,7 +3,9 @@ import { nockFixtures } from '../test/nock'
 import { OaiPmhError } from './errors'
 import { OaiPmh } from './oai-pmh'
 
-const baseUrl = 'http://export.arxiv.org/oai2'
+const arxivBaseUrl = 'http://export.arxiv.org/oai2'
+const exlibrisBaseUrl = 'http://bibsys-network.alma.exlibrisgroup.com/view/oai/47BIBSYS_NETWORK/request'
+const gulbenkianBaseUrl = 'http://arca.igc.gulbenkian.pt/oaiextended/request'
 
 const record = {
   header: {
@@ -27,7 +29,7 @@ describe('OaiPmh', () => {
 
   describe('getRecord()', () => {
     it('should get a record', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = await oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv')
       res.should.containDeep(record)
     })
@@ -35,7 +37,7 @@ describe('OaiPmh', () => {
 
   describe('identify()', () => {
     it('should identify arxiv', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = await oaiPmh.identify()
       res.should.containDeep({
         repositoryName: 'arXiv',
@@ -55,7 +57,7 @@ describe('OaiPmh', () => {
     this.timeout(90000)
 
     it('should list identifiers from arxiv', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const options = {
         metadataPrefix: 'arXiv',
         from: '2009-01-01',
@@ -71,6 +73,45 @@ describe('OaiPmh', () => {
         setSpec: 'physics:hep-ex'
       }])
       res.should.have.length(86)
+    })
+
+    it('should list identifiers with resumption token from exlibris', async () => {
+      const oaiPmh = new OaiPmh(exlibrisBaseUrl)
+      const options = {
+        metadataPrefix: 'marc21',
+        set: 'oai_komplett',
+        from: '2017-01-01',
+        until: '2017-01-03'
+      }
+      const res = []
+      for await (const identifier of oaiPmh.listIdentifiers(options)) {
+        res.push(identifier)
+      }
+      res.should.containDeep([{
+        identifier: 'oai:urm_publish:999919908001402201',
+        datestamp: '2017-01-02T14:54:37Z',
+        setSpec: 'oai_komplett'
+      }])
+      res.should.have.length(110)
+    })
+
+    it('should list identifiers with resumption token from gulbenkian', async () => {
+      const oaiPmh = new OaiPmh(gulbenkianBaseUrl)
+      const options = {
+        metadataPrefix: 'oai_dc',
+        from: '2016-01-01',
+        until: '2017-01-01'
+      }
+      const res = []
+      for await (const identifier of oaiPmh.listIdentifiers(options)) {
+        res.push(identifier)
+      }
+      res.should.containDeep([{
+        identifier: 'oai:arca.igc.gulbenkian.pt:10400.7/724',
+        datestamp: '2016-12-01T03:00:19Z',
+        setSpec: ['com_10400.7_266', 'col_10400.7_268']
+      }])
+      res.should.have.length(154)
     })
   })
 
@@ -89,13 +130,13 @@ describe('OaiPmh', () => {
     ]
 
     it('should list metadata formats for arxiv', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = await oaiPmh.listMetadataFormats()
       res.should.containDeep(metadataFormats)
     })
 
     it('should list metadata formats for arxiv id 1208.0264', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = await oaiPmh.listMetadataFormats({
         identifier: 'oai:arXiv.org:1208.0264'
       })
@@ -103,7 +144,7 @@ describe('OaiPmh', () => {
     })
 
     it('should fail for non-existent arxiv id lolcat', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       oaiPmh.listMetadataFormats({
         identifier: 'oai:arXiv.org:lolcat'
       }).should.be.rejectedWith(OaiPmhError)
@@ -116,7 +157,7 @@ describe('OaiPmh', () => {
     this.timeout(30000)
 
     it('should list identifiers from arxiv', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const options = {
         metadataPrefix: 'arXiv',
         from: '2015-01-01',
@@ -133,7 +174,7 @@ describe('OaiPmh', () => {
 
   describe('listSets()', () => {
     it('should list arxiv sets', async () => {
-      const oaiPmh = new OaiPmh(baseUrl)
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = []
       for await (const set of oaiPmh.listSets()) {
         res.push(set)

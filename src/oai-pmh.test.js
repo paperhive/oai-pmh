@@ -5,6 +5,7 @@ import { OaiPmh } from './oai-pmh'
 
 const arxivBaseUrl = 'http://export.arxiv.org/oai2'
 const exlibrisBaseUrl = 'http://bibsys-network.alma.exlibrisgroup.com/view/oai/47BIBSYS_NETWORK/request'
+const gulbenkianBaseUrl = 'http://arca.igc.gulbenkian.pt/oaiextended/request'
 
 const record = {
   header: {
@@ -92,6 +93,25 @@ describe('OaiPmh', () => {
         setSpec: 'oai_komplett'
       }])
       res.should.have.length(110)
+    })
+
+    it('should list identifiers with resumption token from gulbenkian', async () => {
+      const oaiPmh = new OaiPmh(gulbenkianBaseUrl)
+      const options = {
+        metadataPrefix: 'oai_dc',
+        from: '2016-01-01',
+        until: '2017-01-01'
+      }
+      const res = []
+      for await (const identifier of oaiPmh.listIdentifiers(options)) {
+        res.push(identifier)
+      }
+      res.should.containDeep([{
+        identifier: 'oai:arca.igc.gulbenkian.pt:10400.7/724',
+        datestamp: '2016-12-01T03:00:19Z',
+        setSpec: ['com_10400.7_266', 'col_10400.7_268']
+      }])
+      res.should.have.length(154)
     })
   })
 

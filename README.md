@@ -10,17 +10,30 @@ A nodejs module for the Open Archives Initiative Protocol for Metadata Harvestin
 npm install oai-pmh
 ```
 
+**Note:** Node >= 10 is required for this module.
+
 # Library
 
 ## Example
 
-```javascript
-import { OaiPmh } from 'oai-pmh';
+You can run the following script with `node -r esm`:
 
-const oaiPmh = new OaiPmh('http://export.arxiv.org/oai2');
-for await (const identifier of oaiPmh.listIdentifiers({from: '2017-11-01'})) {
-  // do something with identifier
+```javascript
+import { OaiPmh } from 'oai-pmh'
+
+async function main () {
+  const oaiPmh = new OaiPmh('http://export.arxiv.org/oai2')
+  const identifierIterator = oaiPmh.listIdentifiers({
+    metadataPrefix: 'oai_dc',
+    from: '2015-01-01',
+    until: '2015-01-04'
+  })
+  for await (const identifier of identifierIterator) {
+    console.log(identifier)
+  }
 }
+
+main().catch(console.error)
 ```
 
 See [OaiPmh in oai-pmh.js](https://github.com/paperhive/oai-pmh/blob/master/src/oai-pmh.js)

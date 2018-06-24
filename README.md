@@ -16,7 +16,7 @@ npm install oai-pmh
 
 ## Example
 
-You can run the following script `oai-example.js` with `node -r esm oai-example.js`:
+You can run the following script with `node -r esm`:
 
 ```javascript
 import { OaiPmh } from 'oai-pmh'

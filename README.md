@@ -10,7 +10,7 @@ A nodejs module for the Open Archives Initiative Protocol for Metadata Harvestin
 npm install oai-pmh
 ```
 
-**Note:** Node >= 10 is required for this module.
+**Note:** Node >= 10 is required for this module (because it makes use of async generators).
 
 # Library
 

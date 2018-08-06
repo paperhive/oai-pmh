@@ -1,6 +1,6 @@
 {
   "name": "oai-pmh",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "OAI-PMH harvester module for nodejs",
   "main": "src/index-entry.js",
   "scripts": {

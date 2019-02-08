@@ -30,19 +30,19 @@
   },
   "homepage": "https://github.com/paperhive/oai-pmh#readme",
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
-    "codecov": "^3.0.2",
+    "babel-eslint": "^10.0.1",
+    "codecov": "^3.1.0",
     "mocha": "^5.2.0",
-    "nock": "^9.3.3",
-    "nyc": "^12.0.2",
-    "should": "^13.2.1",
-    "standard": "^11.0.1"
+    "nock": "^10.0.6",
+    "nyc": "^13.2.0",
+    "should": "^13.2.3",
+    "standard": "^12.0.1"
   },
   "dependencies": {
-    "commander": "^2.15.1",
-    "esm": "^3.0.52",
-    "lodash": "^4.17.10",
-    "request": "^2.87.0",
+    "commander": "^2.19.0",
+    "esm": "^3.2.4",
+    "lodash": "^4.17.11",
+    "request": "^2.88.0",
     "xml2js": "^0.4.16"
   },
   "standard": {

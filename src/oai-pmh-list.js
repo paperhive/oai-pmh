@@ -29,7 +29,7 @@ export async function * getOaiListItems (oaiPmh, verb, field, options) {
   })
   const initialParsedResponse = await parseOaiPmhXml(initialResponse.body)
   const initialResult = initialParsedResponse[verb]
-  for (const item of initialResult[field]) {
+  for (const item of [].concat(initialResult[field])) {
     yield item
   }
 
@@ -45,7 +45,7 @@ export async function * getOaiListItems (oaiPmh, verb, field, options) {
     })
     const parsedResponse = await parseOaiPmhXml(response.body)
     result = parsedResponse[verb]
-    for (const item of result[field]) {
+    for (const item of [].concat(result[field])) {
       yield item
     }
   }

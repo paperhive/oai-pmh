@@ -189,5 +189,17 @@ describe('OaiPmh', () => {
         { setSpec: 'stat', setName: 'Statistics' }
       ])
     })
+    
+    it('should list arxiv sets single result', async () => {
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
+      const res = []
+      for await (const set of oaiPmh.listSets()) {
+        res.push(set)
+      }
+      res.should.containDeep([
+        { setSpec: 'cs', setName: 'Computer Science' }
+      ])
+      res.should.have.length(1)
+    })
   })
 })

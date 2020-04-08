@@ -1,0 +1,29 @@
+[
+    {
+        "scope": "https://oai.mikromarc.no:443",
+        "method": "GET",
+        "path": "/OAI/mic?verb=ListRecords&metadataPrefix=marcxchange&from=2020-04-10",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"utf-8\"?><OAI-PMH xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\" xmlns=\"http://www.openarchives.org/OAI/2.0/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><responseDate>2020-04-10T06:06:27Z</responseDate><request verb=\"ListRecords\" metadataPrefix=\"marcxchange\" from=\"2020-04-10\">http://mm3-oai-pilot.mmasp.no/OAI/mic</request><ListRecords/></OAI-PMH>",
+        "rawHeaders": [
+            "Cache-Control",
+            "private",
+            "Content-Type",
+            "text/xml",
+            "Server",
+            "Microsoft-IIS/10.0",
+            "X-AspNet-Version",
+            "4.0.30319",
+            "X-Powered-By",
+            "ASP.NET",
+            "Date",
+            "Fri, 10 Apr 2020 06:06:27 GMT",
+            "Content-Length",
+            "492",
+            "Connection",
+            "close"
+        ],
+        "responseIsBinary": false
+    }
+]

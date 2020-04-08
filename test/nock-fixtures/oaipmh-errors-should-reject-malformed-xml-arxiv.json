@@ -1,0 +1,26 @@
+[
+    {
+        "scope": "http://export.arxiv.org:80",
+        "method": "GET",
+        "path": "/oai2?verb=GetRecord&identifier=oai%3AarXiv.org%3A1412.8545&metadataPrefix=arXiv",
+        "body": "",
+        "status": 200,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<error code=\"idDoesNotExist\">The value of the identifier argument is unknown or illegal in this repository.</error>",
+        "rawHeaders": [
+            "Date",
+            "Thu, 09 Apr 2020 20:03:16 GMT",
+            "Server",
+            "Apache",
+            "Vary",
+            "Accept-Encoding,User-Agent",
+            "Content-Encoding",
+            "gzip",
+            "Content-Length",
+            "1024",
+            "Connection",
+            "close",
+            "Content-Type",
+            "text/xml"
+        ]        
+    }
+]

@@ -10,6 +10,7 @@ function getResumptionToken (result, listSize) {
 
   const cursor = get(token, '$.cursor')
   const completeListSize = get(token, '$.completeListSize')
+
   if (
     cursor &&
     completeListSize &&
@@ -27,15 +28,17 @@ export async function * getOaiListItems (oaiPmh, verb, field, options) {
       verb
     }
   })
+  let length = 0
   const initialParsedResponse = await parseOaiPmhXml(initialResponse.body)
-  const initialResult = initialParsedResponse[verb]
+  const initialResult = initialParsedResponse[verb] || { [field]: [] }
   for (const item of [].concat(initialResult[field])) {
     yield item
+    length++
   }
 
   let result = initialResult
   let resumptionToken
-  while ((resumptionToken = getResumptionToken(result, result[field].length))) {
+  while ((resumptionToken = getResumptionToken(result, length))) {
     const response = await oaiPmh.request({
       url: oaiPmh.baseUrl,
       qs: {
@@ -47,6 +50,7 @@ export async function * getOaiListItems (oaiPmh, verb, field, options) {
     result = parsedResponse[verb]
     for (const item of [].concat(result[field])) {
       yield item
+      length++
     }
   }
 }

@@ -15,7 +15,7 @@ export class OaiPmh {
 
     // default options
     this.options = {
-      userAgent: `oai-pmh/${pkg.version} (https://github.com/paperhive/oai-pmh)`,
+      userAgent: `oai-pmh/${pkg.version} (${pkg.homepage})`,
       retry: true, // automatically retry in case of status code 503
       retryMin: 5, // wait at least 5 seconds
       retryMax: 600 // wait at maximum 600 seconds

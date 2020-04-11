@@ -1,5 +1,5 @@
 {
-  "name": "oai-pmh",
+  "name": "oai-pmh2",
   "version": "2.0.3",
   "description": "OAI-PMH harvester module for nodejs",
   "main": "src/index-entry.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paperhive/oai-pmh.git"
+    "url": "git+https://github.com/virtueme/oai-pmh.git"
   },
   "keywords": [
     "oai-pmh",
@@ -23,12 +23,12 @@
     "crawl",
     "metadata"
   ],
-  "author": "André Gaul <andre@gaul.io>",
+  "author": "Benny Thomas <jan.thomas@speilbildet.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/paperhive/oai-pmh/issues"
+    "url": "https://github.com/virtueme/oai-pmh/issues"
   },
-  "homepage": "https://github.com/paperhive/oai-pmh#readme",
+  "homepage": "https://github.com/virtueme/oai-pmh",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "codecov": "^3.1.0",

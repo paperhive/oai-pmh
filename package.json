@@ -43,7 +43,7 @@
     "esm": "^3.2.4",
     "got": "^10.7.0",
     "lodash": "^4.17.15",
-    "query-string": "^6.12.0",
+    "query-string": "^6.12.1",
     "xml2js": "^0.4.23"
   },
   "standard": {

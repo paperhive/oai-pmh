@@ -32,7 +32,11 @@ describe('OaiPmh', () => {
     it('should get a record', async () => {
       const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = await oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv')
+      const lastXMLResponse = oaiPmh.lastXMLResponse
+
       res.should.containDeep(record)
+
+      should.exist(lastXMLResponse)
     })
   })
 

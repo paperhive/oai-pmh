@@ -37,6 +37,8 @@ export class OaiPmh {
           : 0
       })
 
+      this.lastXMLResponse = res.body
+
       return res
     } catch (error) {
       throw new OaiPmhError(

@@ -50,6 +50,9 @@
     "env": {
       "mocha": true
     },
+    "globals": [
+      "should"
+    ],
     "parser": "babel-eslint"
   },
   "engines": {

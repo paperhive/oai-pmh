@@ -1,6 +1,6 @@
 {
   "name": "oai-pmh2",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "OAI-PMH harvester module for nodejs",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

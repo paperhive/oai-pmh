@@ -2,7 +2,7 @@ import { assign, get } from 'lodash'
 import got from 'got'
 import queryString from 'query-string'
 
-import pkg from '../package.json'
+import pkg from '~/package.json'
 import { OaiPmhError } from './errors'
 import { getOaiListItems } from './oai-pmh-list'
 import { parseOaiPmhXml } from './oai-pmh-xml'

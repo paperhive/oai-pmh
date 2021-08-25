@@ -1,21 +1,32 @@
 {
-  "name": "oai-pmh",
-  "version": "2.0.3",
+  "name": "oai-pmh2",
+  "version": "2.2.0",
   "description": "OAI-PMH harvester module for nodejs",
-  "main": "src/index-entry.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "type": "commonjs",
   "scripts": {
+    "build": "npm run build:esm && npm run build:cjs && npm run build:bin && npm run build:package-modes",
+    "build:bin": "BABEL_ENV=bin babel bin/oai-pmh --out-file 'dist/bin/oai-pmh' --source-maps --extensions '' && BABEL_ENV=bin babel bin/oai-pmh.js --out-file 'dist/bin/oai-pmh.js' --source-maps",
+    "build:esm": "BABEL_ENV=esm babel src --out-dir 'dist/esm' --source-maps",
+    "build:cjs": "BABEL_ENV=cjs babel src --out-dir 'dist/cjs' --source-maps",
+    "build:package-modes": "echo '{\"type\": \"module\"}' > dist/esm/package.json && echo '{\"type\": \"commonjs\"}' > dist/cjs/package.json && echo '{\"type\": \"commonjs\"}' > dist/bin/package.json",
     "cover": "nyc npm test",
     "lint": "standard",
-    "test": "mocha -r should -r esm 'src/**/*.test.js' 'test/**/*.js'",
+    "test": "BABEL_ENV=test mocha -r should -r @babel/register 'src/**/*.test.js' 'test/**/*.js'",
     "test-cover": "nyc npm test",
     "test-cover-submit": "nyc report --reporter=json && codecov -f coverage/*.json"
   },
   "bin": {
-    "oai-pmh": "./bin/oai-pmh"
+    "oai-pmh": "./dist/bin/oai-pmh"
   },
+  "files": [
+      "dist/*",
+      "index.d.ts"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paperhive/oai-pmh.git"
+    "url": "git+https://github.com/virtueme/oai-pmh.git"
   },
   "keywords": [
     "oai-pmh",
@@ -23,35 +34,44 @@
     "crawl",
     "metadata"
   ],
-  "author": "André Gaul <andre@gaul.io>",
+  "author": "Benny Thomas <jan.thomas@speilbildet.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/paperhive/oai-pmh/issues"
+    "url": "https://github.com/virtueme/oai-pmh/issues"
   },
-  "homepage": "https://github.com/paperhive/oai-pmh#readme",
+  "homepage": "https://github.com/virtueme/oai-pmh",
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "codecov": "^3.1.0",
-    "mocha": "^6.1.4",
-    "nock": "^10.0.6",
-    "nyc": "^14.1.1",
+    "@babel/cli": "^7.14.8",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/register": "^7.15.3",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "codecov": "^3.8.3",
+    "mocha": "^9.1.0",
+    "nock": "^13.1.3",
+    "nyc": "^15.1.0",
     "should": "^13.2.3",
-    "standard": "^12.0.1"
+    "standard": "^16.0.3"
   },
   "dependencies": {
-    "commander": "^2.19.0",
-    "esm": "^3.2.4",
-    "lodash": "^4.17.11",
-    "request": "^2.88.0",
-    "xml2js": "^0.4.16"
+    "commander": "^8.1.0",
+    "core-js": "^3.16.0",
+    "got": "^11.8.0",
+    "lodash": "^4.17.0",
+    "lodash-es": "^4.17.0",
+    "query-string": "^7.0.0",
+    "xml2js": "^0.4.0"
   },
   "standard": {
     "env": {
       "mocha": true
     },
+    "globals": [
+      "should"
+    ],
     "parser": "babel-eslint"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12.0.0"
   }
 }

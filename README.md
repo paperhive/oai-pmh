@@ -1,13 +1,15 @@
 # OAI PMH
-[![travis-ci](https://travis-ci.org/paperhive/oai-pmh.svg?branch=master)](https://travis-ci.org/paperhive/oai-pmh)
-[![codecov.io](https://codecov.io/github/paperhive/oai-pmh/coverage.svg?branch=master)](https://codecov.io/github/paperhive/oai-pmh?branch=master)
-[![npm](https://img.shields.io/npm/v/oai-pmh.svg)](https://www.npmjs.com/package/oai-pmh)
+[![travis-ci](https://travis-ci.org/virtueme/oai-pmh.svg?branch=master)](https://travis-ci.org/virtueme/oai-pmh)
+[![codecov.io](https://codecov.io/github/virtueme/oai-pmh/coverage.svg?branch=master)](https://codecov.io/github/virtueme/oai-pmh?branch=master)
+[![npm](https://img.shields.io/npm/v/oai-pmh2.svg)](https://www.npmjs.com/package/oai-pmh2)
 
 A nodejs module for the Open Archives Initiative Protocol for Metadata Harvesting ([OAI-PMH 2.0](http://www.openarchives.org/OAI/openarchivesprotocol.html)). Use this module if you want to harvest metadata from OAI-PMH providers, e.g., [arxiv](http://arxiv.org/).
 
+**Note:** This is a fork of [oai-pmh](https://github.com/paperhive/oai-pmh).
+
 # Installation
 ```
-npm install oai-pmh
+npm install oai-pmh2
 ```
 
 **Note:** Node >= 10 is required for this module (because it makes use of async generators).
@@ -19,7 +21,7 @@ npm install oai-pmh
 You can run the following script with `node -r esm`:
 
 ```javascript
-import { OaiPmh } from 'oai-pmh'
+import { OaiPmh } from 'oai-pmh2'
 
 async function main () {
   const oaiPmh = new OaiPmh('http://export.arxiv.org/oai2')
@@ -36,7 +38,7 @@ async function main () {
 main().catch(console.error)
 ```
 
-See [OaiPmh in oai-pmh.js](https://github.com/paperhive/oai-pmh/blob/master/src/oai-pmh.js)
+See [OaiPmh in oai-pmh.js](https://github.com/virtueme/oai-pmh/blob/master/src/oai-pmh.js)
 for all available commands.
 
 

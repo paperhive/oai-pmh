@@ -1,0 +1,37 @@
+[
+    {
+        "scope": "http://example.com:80",
+        "method": "GET",
+        "path": "/oai?verb=Identify",
+        "body": "",
+        "status": 404,
+        "response": "<html><body>\n<h1>This is not the site you're looking for</h1>\n</body></html>\n",
+        "rawHeaders": [
+            "Content-Encoding",
+            "gzip",
+            "Age",
+            "495",
+            "Cache-Control",
+            "max-age=604800",
+            "Content-Type",
+            "text/html; charset=UTF-8",
+            "Date",
+            "Fri, 10 Apr 2020 12:39:05 GMT",
+            "Expires",
+            "Fri, 17 Apr 2020 12:39:05 GMT",
+            "Last-Modified",
+            "Fri, 10 Apr 2020 12:30:50 GMT",
+            "Server",
+            "ECS (oxr/8323)",
+            "Vary",
+            "Accept-Encoding",
+            "X-Cache",
+            "404-HIT",
+            "Content-Length",
+            "80",
+            "Connection",
+            "close"
+        ],
+        "responseIsBinary": false
+    }
+]

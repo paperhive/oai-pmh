@@ -1,8 +1,8 @@
 import { pick } from 'lodash'
 import program from 'commander'
 
-import { OaiPmh } from '../'
-import pkg from '../package.json'
+import { OaiPmh } from '~/src'
+import pkg from '~/package.json'
 
 program.version(pkg.version)
 

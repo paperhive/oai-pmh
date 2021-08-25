@@ -6,6 +6,7 @@ import { OaiPmh } from './oai-pmh'
 const arxivBaseUrl = 'http://export.arxiv.org/oai2'
 const exlibrisBaseUrl = 'http://bibsys-network.alma.exlibrisgroup.com/view/oai/47BIBSYS_NETWORK/request'
 const gulbenkianBaseUrl = 'http://arca.igc.gulbenkian.pt/oaiextended/request'
+const mikromarcUrl = 'https://oai.mikromarc.no/OAI/mic'
 
 const record = {
   header: {
@@ -31,7 +32,11 @@ describe('OaiPmh', () => {
     it('should get a record', async () => {
       const oaiPmh = new OaiPmh(arxivBaseUrl)
       const res = await oaiPmh.getRecord('oai:arXiv.org:1412.8544', 'arXiv')
+      const lastXMLResponse = oaiPmh.lastXMLResponse
+
       res.should.containDeep(record)
+
+      should.exist(lastXMLResponse)
     })
   })
 
@@ -188,6 +193,47 @@ describe('OaiPmh', () => {
         { setSpec: 'q-fin', setName: 'Quantitative Finance' },
         { setSpec: 'stat', setName: 'Statistics' }
       ])
+    })
+
+    it('should list arxiv sets single result', async () => {
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
+      const res = []
+      for await (const set of oaiPmh.listSets()) {
+        res.push(set)
+      }
+      res.should.containDeep([
+        { setSpec: 'cs', setName: 'Computer Science' }
+      ])
+      res.should.have.length(1)
+    })
+  })
+
+  describe('non standards', () => {
+    it('should accept empty result listRecords', async () => {
+      const oaiPmh = new OaiPmh(mikromarcUrl)
+      const options = {
+        metadataPrefix: 'marcxchange',
+        from: '2020-04-10'
+      }
+      const res = []
+      for await (const record of oaiPmh.listRecords(options)) {
+        res.push(record)
+      }
+      res.should.have.length(0)
+    })
+  })
+
+  describe('errors', () => {
+    it('should reject malformed xml arxiv', () => {
+      const oaiPmh = new OaiPmh(arxivBaseUrl)
+
+      return oaiPmh.getRecord('oai:arXiv.org:1412.8545', 'arXiv').should.be.rejectedWith('Returned data does not conform to OAI-PMH')
+    })
+
+    it('should reject 404 error', () => {
+      const oaiPmh = new OaiPmh('http://example.com/oai', { retry: false })
+
+      return oaiPmh.identify().should.be.rejectedWith('Unexpected status code 404 (expected 200).')
     })
   })
 })

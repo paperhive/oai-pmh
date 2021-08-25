@@ -1,12 +1,11 @@
 import { assign, get } from 'lodash'
-import request from 'request'
-import { promisify } from 'util'
+import got from 'got'
+import queryString from 'query-string'
 
-import pkg from '../package.json'
+import pkg from '~/package.json'
 import { OaiPmhError } from './errors'
 import { getOaiListItems } from './oai-pmh-list'
 import { parseOaiPmhXml } from './oai-pmh-xml'
-import { sleep } from './utils'
 
 // main class
 export class OaiPmh {
@@ -15,72 +14,37 @@ export class OaiPmh {
 
     // default options
     this.options = {
-      userAgent: `oai-pmh/${pkg.version} (https://github.com/paperhive/oai-pmh)`,
+      userAgent: `oai-pmh/${pkg.version} (${pkg.homepage})`,
       retry: true, // automatically retry in case of status code 503
-      retryMin: 5, // wait at least 5 seconds
-      retryMax: 600 // wait at maximum 600 seconds
+      retryMax: 600000 // wait at maximum 600 seconds, given in milliseconds
     }
+
     // set user-provided options
     assign(this.options, _options)
   }
 
   // OAI-PMH request with retries for status code 503
-  async request (options) {
-    let res
-
-    // loop until request succeeds (with retry: true)
-    do {
-      res = await promisify(request)({
-        ...options,
+  async request ({ url, qs, headers }) {
+    try {
+      const res = await got.get(url, {
+        searchParams: queryString.stringify(qs),
         headers: {
-          ...(options.headers || {}),
+          ...(headers || {}),
           'User-Agent': this.options.userAgent
-        }
+        },
+        retry: this.options.retry
+          ? { maxRetryAfter: this.options.retryMax }
+          : 0
       })
 
-      // retry?
-      if (res.statusCode === 503 && this.options.retry) {
-        // get and parse retry-after header
-        const retryAfter = res.headers['retry-after']
+      this.lastXMLResponse = res.body
 
-        if (!retryAfter) {
-          throw new OaiPmhError('Status code 503 without Retry-After header.')
-        }
-
-        // compute seconds to wait
-        let retrySeconds
-        if (/^\s*\d+\s*$/.test(retryAfter)) {
-          // integer: seconds to wait
-          retrySeconds = parseInt(retryAfter, 10)
-        } else {
-          // http-date: date to await
-          const retryDate = new Date(retryAfter)
-          if (!retryDate) {
-            throw new OaiPmhError('Status code 503 with invalid Retry-After header.')
-          }
-          retrySeconds = Math.floor((retryDate - new Date()) / 1000)
-        }
-
-        // sanitize
-        if (retrySeconds < this.options.retryMin) {
-          retrySeconds = this.options.retryMin
-        }
-        if (retrySeconds > this.options.retryMax) {
-          retrySeconds = this.options.retryMax
-        }
-
-        // wait
-        await sleep(retrySeconds)
-      }
-    } while (res.statusCode === 503 && this.options.retry)
-
-    if (res.statusCode !== 200) {
+      return res
+    } catch (error) {
       throw new OaiPmhError(
-        `Unexpected status code ${res.statusCode} (expected 200).`
+        `Unexpected status code ${error.response.statusCode} (expected 200).`
       )
     }
-
-    return res
   }
 
   async getRecord (identifier, metadataPrefix) {
@@ -117,7 +81,7 @@ export class OaiPmh {
     return obj.Identify
   }
 
-  listIdentifiers (options = {}) {
+  listIdentifiers (options) {
     return getOaiListItems(this, 'ListIdentifiers', 'header', options)
   }
 

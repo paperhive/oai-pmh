@@ -5,3 +5,4 @@ coverage
 src/**/*.test.js
 test
 *.tgz
+.env

@@ -31,19 +31,18 @@
   "homepage": "https://github.com/virtueme/oai-pmh",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "codecov": "^3.1.0",
-    "mocha": "^7.1.1",
-    "nock": "^12.0.3",
-    "nyc": "^15.0.1",
+    "codecov": "^3.8.3",
+    "mocha": "^9.1.0",
+    "nock": "^13.1.3",
+    "nyc": "^15.1.0",
     "should": "^13.2.3",
-    "standard": "^14.3.3"
+    "standard": "^16.0.3"
   },
   "dependencies": {
     "commander": "^5.0.0",
-    "esm": "^3.2.4",
-    "got": "^10.7.0",
-    "lodash": "^4.17.15",
-    "query-string": "^6.12.1",
+    "got": "^11.8.2",
+    "lodash": "^4.17.21",
+    "query-string": "^7.0.1",
     "xml2js": "^0.4.23"
   },
   "standard": {

@@ -29,6 +29,12 @@ export async function * getOaiListItems (oaiPmh, verb, field, options) {
   })
   const initialParsedResponse = await parseOaiPmhXml(initialResponse.body)
   const initialResult = initialParsedResponse[verb]
+
+  if (initialResult[field] && !initialResult[field].length) {
+    yield initialResult[field]
+    return
+  }
+
   for (const item of initialResult[field]) {
     yield item
   }
